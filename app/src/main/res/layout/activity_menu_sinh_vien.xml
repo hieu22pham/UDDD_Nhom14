@@ -21,7 +21,7 @@
     <Button
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:id="@+id/btnQuanLyPhong"
+        android:id="@+id/btnDangKyPhong"
         android:text="Đăng ký phòng"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
@@ -30,7 +30,7 @@
     <Button
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:id="@+id/btnXemVaDuyetPhieuDangKy"
+        android:id="@+id/btnGiaHanPhong"
         android:text="Gia hạn phòng"
         android:textSize="20sp"
         android:layout_gravity="center"
@@ -39,7 +39,7 @@
     <Button
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:id="@+id/btnXemPhieuDangKyDaDuyet"
+        android:id="@+id/btnQuanLyPhieu"
         android:text="Quản lý phiếu"
         android:textSize="20sp"
         android:layout_gravity="center"

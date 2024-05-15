@@ -1,6 +1,8 @@
 package com.example.uddd_nhom14;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MenuSinhVien extends AppCompatActivity {
 
+    Button btnDangKyPhong, btnGiaHanPhong, btnQuanLyPhieu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,5 +23,18 @@ public class MenuSinhVien extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        getWidget();
     }
+    public void getWidget(){
+        btnDangKyPhong = findViewById(R.id.btnDangKyPhong);
+        btnGiaHanPhong = findViewById(R.id.btnGiaHanPhong);
+        btnQuanLyPhieu = findViewById(R.id.btnQuanLyPhieu);
+        btnGiaHanPhong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
 }
