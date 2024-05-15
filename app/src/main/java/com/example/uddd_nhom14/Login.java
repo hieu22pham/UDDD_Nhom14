@@ -3,10 +3,12 @@ package com.example.uddd_nhom14;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -17,6 +19,7 @@ public class Login extends AppCompatActivity {
 
     EditText edtUsername, edtPassword;
     Button btnDangNhap;
+    CheckBox ckbLuuThongTin;
     private int role;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +29,37 @@ public class Login extends AppCompatActivity {
         initAccountsDatabase();
         getWidget();
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveLoginState();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
+        boolean save = preferences.getBoolean("save", false);
+        if (save) {
+            edtUsername.setText(preferences.getString("tenDangNhap", ""));
+            edtPassword.setText(preferences.getString("matKhau", ""));
+            ckbLuuThongTin.setChecked(preferences.getBoolean("save", false));
+        }
+    }
+    public void saveLoginState() {
+        SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("tenDangNhap", edtUsername.getText().toString());
+        editor.putString("matKhau", edtPassword.getText().toString());
+        editor.putBoolean("save", ckbLuuThongTin.isChecked());
+        editor.apply();
+    }
     public void getWidget(){
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
         btnDangNhap = findViewById(R.id.btnDangNhap);
+        ckbLuuThongTin = findViewById(R.id.ckbLuuThongTin);
         btnDangNhap.setOnClickListener(v -> {
+            saveLoginState();
             String username = edtUsername.getText()+"";
             String password = edtPassword.getText()+"";
             if (authenticateUser(username, password)) {
