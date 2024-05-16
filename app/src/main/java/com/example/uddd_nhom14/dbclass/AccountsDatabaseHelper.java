@@ -1,4 +1,4 @@
-package com.example.uddd_nhom14;
+package com.example.uddd_nhom14.dbclass;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;

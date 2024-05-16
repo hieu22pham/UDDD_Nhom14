@@ -1,4 +1,4 @@
-package com.example.uddd_nhom14;
+package com.example.uddd_nhom14.act;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -14,6 +14,10 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.uddd_nhom14.dbclass.AccountsDatabaseHelper;
+import com.example.uddd_nhom14.R;
+import com.example.uddd_nhom14.obj.Account;
 
 public class Login extends AppCompatActivity {
 
@@ -114,32 +118,19 @@ public class Login extends AppCompatActivity {
         AccountsDatabaseHelper dbHelper = new AccountsDatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(AccountsDatabaseHelper.COLUMN_USERNAME, "d");
-        values.put(AccountsDatabaseHelper.COLUMN_PASSWORD, "d");
-        values.put(AccountsDatabaseHelper.COLUMN_ROLE, 1); // 0 user 1 admin
-        db.insert(AccountsDatabaseHelper.TABLE_USERS, null, values);
-        ContentValues values1 = new ContentValues();
-        values1.put(AccountsDatabaseHelper.COLUMN_USERNAME, "a");
-        values1.put(AccountsDatabaseHelper.COLUMN_PASSWORD, "a");
-        values1.put(AccountsDatabaseHelper.COLUMN_ROLE, 0);
-        db.insert(AccountsDatabaseHelper.TABLE_USERS, null, values1);
-        ContentValues values2 = new ContentValues();
-        values2.put(AccountsDatabaseHelper.COLUMN_USERNAME, "b");
-        values2.put(AccountsDatabaseHelper.COLUMN_PASSWORD, "b");
-        values2.put(AccountsDatabaseHelper.COLUMN_ROLE, 1);
-        db.insert(AccountsDatabaseHelper.TABLE_USERS, null, values2);
-        ContentValues values3 = new ContentValues();
-        values3.put(AccountsDatabaseHelper.COLUMN_USERNAME, "c");
-        values3.put(AccountsDatabaseHelper.COLUMN_PASSWORD, "c");
-        values3.put(AccountsDatabaseHelper.COLUMN_ROLE, 0);
-        db.insert(AccountsDatabaseHelper.TABLE_USERS, null, values3);
-        ContentValues values4 = new ContentValues();
-        values4.put(AccountsDatabaseHelper.COLUMN_USERNAME, "admin");
-        values4.put(AccountsDatabaseHelper.COLUMN_PASSWORD, "123");
-        values4.put(AccountsDatabaseHelper.COLUMN_ROLE, 1);
-        db.insert(AccountsDatabaseHelper.TABLE_USERS, null, values4);
+        addAccountToDatabase(db, new Account("a", "a", 0));
+        addAccountToDatabase(db, new Account("b", "b", 1));
+        addAccountToDatabase(db, new Account("admin", "123456", 1));
+        addAccountToDatabase(db, new Account("e", "e", 0));
 
         db.close();
+    }
+    public void addAccountToDatabase (SQLiteDatabase db, Account a) {
+        ContentValues cv = new ContentValues();
+        cv.put(AccountsDatabaseHelper.COLUMN_USERNAME, a.getUsername());
+        cv.put(AccountsDatabaseHelper.COLUMN_PASSWORD, a.getPassword());
+        cv.put(AccountsDatabaseHelper.COLUMN_ROLE, a.getRole());
+        db.update(AccountsDatabaseHelper.TABLE_USERS, cv, AccountsDatabaseHelper.COLUMN_USERNAME + " = ?", new String[] {a.getUsername()});
+        db.insert(AccountsDatabaseHelper.TABLE_USERS, null, cv);
     }
 }
