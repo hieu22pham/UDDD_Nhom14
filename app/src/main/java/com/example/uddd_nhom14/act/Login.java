@@ -15,22 +15,26 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.uddd_nhom14.dbclass.AccountsDatabaseHelper;
 import com.example.uddd_nhom14.R;
+import com.example.uddd_nhom14.dbclass.DatabaseHelper;
 import com.example.uddd_nhom14.obj.Account;
+import com.example.uddd_nhom14.obj.Rent;
+import com.example.uddd_nhom14.obj.Room;
 
 public class Login extends AppCompatActivity {
 
     EditText edtUsername, edtPassword;
     Button btnDangNhap;
     CheckBox ckbLuuThongTin;
-    private int role;
+    private int role, id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
         initAccountsDatabase();
+        initRoomsDatabase();
+        addSomeFakeRent();
         getWidget();
     }
     @Override
@@ -68,7 +72,11 @@ public class Login extends AppCompatActivity {
             String password = edtPassword.getText()+"";
             if (authenticateUser(username, password)) {
                 if (role == 0) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("username", username);
+                    bundle.putInt("id", id);
                     Intent intent = new Intent(Login.this, MenuSinhVien.class);
+                    intent.putExtra("bundle", bundle);
                     startActivity(intent);
                 }
                 if (role == 1) {
@@ -84,28 +92,19 @@ public class Login extends AppCompatActivity {
     @SuppressLint("Range")
     private boolean authenticateUser(String username, String password) {
         try {
-            AccountsDatabaseHelper dbHelper = new AccountsDatabaseHelper(this);
-            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            DatabaseHelper dbHelper = new DatabaseHelper(this);
 
-            String[] columns = {AccountsDatabaseHelper.COLUMN_USERNAME}; // lấy ra cột này, null thì lấy hết
-            String selection = AccountsDatabaseHelper.COLUMN_USERNAME + " = ? AND " + AccountsDatabaseHelper.COLUMN_PASSWORD + " = ?";
-            String[] selectionArgs = {username, password};
-            Cursor cursor = db.query(AccountsDatabaseHelper.TABLE_USERS, columns, selection, selectionArgs, null, null, null);
-
+            Cursor cursor = dbHelper.getAccountByUsernameAndPasswordCursor(username, password);
             int count = cursor.getCount();
             if (count > 0){
-                Cursor cursor1 = db.query(AccountsDatabaseHelper.TABLE_USERS, null, selection, selectionArgs, null, null, null);
-                if (cursor1.moveToFirst()) {
-                    int columnIndex = cursor1.getColumnIndex(AccountsDatabaseHelper.COLUMN_ROLE);
-//                    Log.e("TT", columnIndex +"");
-                    this.role = cursor1.getInt(columnIndex);
-//                    Log.e("T", role+"");
+                if (cursor.moveToFirst()) {
+                    this.role = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_ROLE));
+                    this.id = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_ID));
                 }
-                cursor1.close();
             }
 
             cursor.close();
-            db.close();
+            dbHelper.close();
 
             return count > 0;
         } catch (Exception e){
@@ -115,22 +114,29 @@ public class Login extends AppCompatActivity {
     }
 
     public void initAccountsDatabase() {
-        AccountsDatabaseHelper dbHelper = new AccountsDatabaseHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        DatabaseHelper db = new DatabaseHelper(this);
 
-        addAccountToDatabase(db, new Account("a", "a", 0));
-        addAccountToDatabase(db, new Account("b", "b", 1));
-        addAccountToDatabase(db, new Account("admin", "123456", 1));
-        addAccountToDatabase(db, new Account("e", "e", 0));
+        db.addAccountToDatabase(new Account("a", "a", "Tạ Thị Lạng", 0));
+        db.addAccountToDatabase(new Account("b", "b",  1));
+        db.addAccountToDatabase(new Account("admin", "123456", "", 1));
+        db.addAccountToDatabase(new Account("e", "e", "Kha Tỷ Cân", 0));
 
         db.close();
     }
-    public void addAccountToDatabase (SQLiteDatabase db, Account a) {
-        ContentValues cv = new ContentValues();
-        cv.put(AccountsDatabaseHelper.COLUMN_USERNAME, a.getUsername());
-        cv.put(AccountsDatabaseHelper.COLUMN_PASSWORD, a.getPassword());
-        cv.put(AccountsDatabaseHelper.COLUMN_ROLE, a.getRole());
-        db.update(AccountsDatabaseHelper.TABLE_USERS, cv, AccountsDatabaseHelper.COLUMN_USERNAME + " = ?", new String[] {a.getUsername()});
-        db.insert(AccountsDatabaseHelper.TABLE_USERS, null, cv);
+
+    public void initRoomsDatabase () {
+        DatabaseHelper db = new DatabaseHelper(this);
+
+        for (int i = 501; i < 503; i++) {
+            db.addRoomToDatabase(new Room(i+"", "A", 5+""));
+        }
+        db.close();
     }
+
+    public void addSomeFakeRent() {
+        DatabaseHelper db = new DatabaseHelper(this);
+        db.addARentToDatabase(new Rent("a", 501+""));
+        db.close();
+    }
+
 }
