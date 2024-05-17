@@ -43,7 +43,14 @@ public class MenuSinhVien extends AppCompatActivity {
             SQLiteDatabase db = dbHelper.getReadableDatabase();
             assert bundle != null;
             Cursor cursor = db.query(DatabaseHelper.RENTLIST_TABLE_NAME, null, DatabaseHelper.COLUMN_USERNAME + " = ?", new String[] {bundle.getString("username")}, null, null, null);
-            if (cursor.moveToFirst()) Toast.makeText(MenuSinhVien.this, cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ROOMNUMBER)), Toast.LENGTH_LONG).show();
+            if (cursor.moveToFirst()) {
+                Intent intent1 = new Intent(MenuSinhVien.this, GiaHanPhong.class);
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("username", bundle.getString("username"));
+                intent1.putExtra("bundle", bundle1);
+                startActivity(intent1);
+                Toast.makeText(MenuSinhVien.this, cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ROOMNUMBER)), Toast.LENGTH_LONG).show();
+            }
             else {
                 Toast.makeText(MenuSinhVien.this, "Chưa có", Toast.LENGTH_LONG).show();
             }

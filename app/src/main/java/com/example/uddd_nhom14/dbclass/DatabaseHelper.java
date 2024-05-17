@@ -84,6 +84,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] selectionArgs = {username, password};
         return db.query(ACCOUNT_TABLE_NAME, null, selection, selectionArgs, null, null, null);
     }
+    public Cursor getAccountByUsernameCursor(String username) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String selection = COLUMN_USERNAME + " = ?";
+        String[] selectionArgs = {username};
+        return db.query(ACCOUNT_TABLE_NAME, null, selection, selectionArgs, null, null, null);
+    }
 //    public Cursor getAllAccountCursor() {
 //        SQLiteDatabase db = getReadableDatabase();
 //

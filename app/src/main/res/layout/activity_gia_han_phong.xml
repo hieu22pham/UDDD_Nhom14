@@ -18,6 +18,36 @@
         android:theme="?attr/actionBarTheme"
         app:title="Phiếu gia hạn phòng KTX"
         app:titleTextColor="@color/cardview_light_background"/>
-    
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="30dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phiếu gia hạn phòng"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Người làm phiếu:"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/tvNguoiLamPhieu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Người làm phiếu:"
+            android:textSize="20sp" />
+    </TableRow>
 
 </LinearLayout>
