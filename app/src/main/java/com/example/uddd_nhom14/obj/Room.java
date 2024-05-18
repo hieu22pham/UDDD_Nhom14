@@ -2,13 +2,17 @@ package com.example.uddd_nhom14.obj;
 
 public class Room {
     String roomnumber, area, floor;
+    long roomprice;
+    int roomtype;
 
     public Room() {}
 
-    public Room(String roomnumber, String area, String floor) {
+    public Room(String roomnumber, String area, String floor, long roomprice, int roomtype) {
         this.roomnumber = roomnumber;
         this.area = area;
         this.floor = floor;
+        this.roomprice = roomprice;
+        this.roomtype = roomtype;
     }
 
     public String getRoomnumber() {
@@ -33,5 +37,21 @@ public class Room {
 
     public void setFloor(String floor) {
         this.floor = floor;
+    }
+
+    public long getRoomprice() {
+        return roomprice;
+    }
+
+    public int getRoomtype() {
+        return roomtype;
+    }
+
+    public void setRoomtype(int roomtype) {
+        this.roomtype = roomtype;
+    }
+
+    public void setRoomprice(long roomprice) {
+        this.roomprice = roomprice;
     }
 }

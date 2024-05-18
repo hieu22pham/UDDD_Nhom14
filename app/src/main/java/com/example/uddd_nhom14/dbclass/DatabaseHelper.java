@@ -28,6 +28,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ROOMNUMBER = "roomnumber";
     public static final String COLUMN_AREA = "area";
     public static final String COLUMN_FLOOR = "floor";
+    public static final String COLUMN_ROOMPRICE = "price";
+    public static final String COLUMN_ROOMTYPE = "roomtype";
 
 //Thông số bảng rentlish
     public static final String RENTLIST_TABLE_NAME = "rentlist";
@@ -55,17 +57,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_ROOMID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_ROOMNUMBER + " TEXT, "
                 + COLUMN_AREA + " TEXT, "
-                + COLUMN_FLOOR + " TEXT)";
+                + COLUMN_FLOOR + " TEXT, "
+                + COLUMN_ROOMTYPE + " INTEGER, "
+                + COLUMN_ROOMPRICE + " INTEGER)";
         db.execSQL(createTableQuery2);
         //Tạo bảng rentlist
         String createTableQuery3 = "CREATE TABLE " + RENTLIST_TABLE_NAME + "("
                 + COLUMN_RENTID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_ROOMNUMBER + " TEXT, "
+                + COLUMN_AREA + " TEXT, "
                 + COLUMN_USERNAME + " TEXT, "
                 + "CONSTRAINT fk1 FOREIGN KEY(" + COLUMN_USERNAME + ") "
                 + " REFERENCES " + ACCOUNT_TABLE_NAME + " (" + COLUMN_USERNAME + "), "
-                + "CONSTRAINT fk2 FOREIGN KEY(" + COLUMN_ROOMNUMBER + ") "
-                + " REFERENCES " + ROOM_TABLE_NAME + " (" + COLUMN_ROOMNUMBER + ")  )";
+                + "CONSTRAINT fk2 FOREIGN KEY(" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA + ") "
+                + " REFERENCES " + ROOM_TABLE_NAME + " (" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA  + ")  )";
         db.execSQL(createTableQuery3);
     }
 
@@ -91,19 +96,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] selectionArgs = {username};
         return db.query(ACCOUNT_TABLE_NAME, null, selection, selectionArgs, null, null, null);
     }
-//    public Cursor getAllAccountCursor() {
-//        SQLiteDatabase db = getReadableDatabase();
-//
-//    }
+    public Cursor getRoomByRoomNumberAndAreaCursor(String roomnumber, String area) {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.query(ROOM_TABLE_NAME, null, COLUMN_ROOMNUMBER + " = ? AND " + COLUMN_AREA + " = ?", new String[]{roomnumber, area}, null, null, null);
+    }
+    public Cursor getRentByUsername(String username) {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.query(RENTLIST_TABLE_NAME, null, COLUMN_USERNAME + " = ?", new String[]{username}, null, null, null);
+    }
+
 
     public void addAccountToDatabase (Account a) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_USERNAME, a.getUsername());
         cv.put(COLUMN_PASSWORD, a.getPassword());
-        if (a.getRole() == 0) {
-            cv.put(COLUMN_NAME, a.getName());
-        }
+        if (a.getRole() == 0) cv.put(COLUMN_NAME, a.getName());
         cv.put(COLUMN_ROLE, a.getRole());
         db.insert(ACCOUNT_TABLE_NAME, null, cv);
         db.update(ACCOUNT_TABLE_NAME, cv, COLUMN_USERNAME + " = ?", new String[] {a.getUsername()});
@@ -114,6 +122,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_ROOMNUMBER, r.getRoomnumber());
         cv.put(COLUMN_AREA, r.getArea());
         cv.put(COLUMN_FLOOR, r.getFloor());
+        cv.put(COLUMN_ROOMTYPE, r.getRoomtype());
+        cv.put(COLUMN_ROOMPRICE, r.getRoomprice());
         db.insert(ROOM_TABLE_NAME, null, cv);
         db.update(ROOM_TABLE_NAME, cv, COLUMN_ROOMNUMBER + " = ?", new String[] {r.getRoomnumber()});
     }
@@ -122,6 +132,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_USERNAME, r.getUsername());
         cv.put(COLUMN_ROOMNUMBER, r.getRoomnumber());
+        cv.put(COLUMN_AREA, r.getRoomarea());
         db.insert(RENTLIST_TABLE_NAME, null, cv);
         db.update(RENTLIST_TABLE_NAME, cv, COLUMN_USERNAME + " = ?", new String[] {r.getUsername()});
     }
