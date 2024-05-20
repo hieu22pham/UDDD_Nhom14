@@ -1,4 +1,4 @@
-package com.example.uddd_nhom14.act;
+package com.example.uddd_nhom14.activity;
 
 import android.os.Bundle;
 

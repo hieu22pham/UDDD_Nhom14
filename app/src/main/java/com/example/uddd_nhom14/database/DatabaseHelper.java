@@ -1,4 +1,4 @@
-package com.example.uddd_nhom14.dbclass;
+package com.example.uddd_nhom14.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,9 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.uddd_nhom14.obj.Account;
-import com.example.uddd_nhom14.obj.Rent;
-import com.example.uddd_nhom14.obj.Room;
+import com.example.uddd_nhom14.entity.Account;
+import com.example.uddd_nhom14.entity.Rent;
+import com.example.uddd_nhom14.entity.Room;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "mydatabase.db";
