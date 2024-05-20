@@ -1,11 +1,10 @@
-package com.example.uddd_nhom14.act;
+package com.example.uddd_nhom14.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +13,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.uddd_nhom14.R;
-import com.example.uddd_nhom14.dbclass.DatabaseHelper;
+import com.example.uddd_nhom14.database.DatabaseHelper;
 
 public class GiaHanPhong extends AppCompatActivity {
 

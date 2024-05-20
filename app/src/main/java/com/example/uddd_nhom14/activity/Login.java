@@ -1,11 +1,9 @@
-package com.example.uddd_nhom14.act;
+package com.example.uddd_nhom14.activity;
 
 import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,10 +14,10 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.uddd_nhom14.R;
-import com.example.uddd_nhom14.dbclass.DatabaseHelper;
-import com.example.uddd_nhom14.obj.Account;
-import com.example.uddd_nhom14.obj.Rent;
-import com.example.uddd_nhom14.obj.Room;
+import com.example.uddd_nhom14.database.DatabaseHelper;
+import com.example.uddd_nhom14.entity.Account;
+import com.example.uddd_nhom14.entity.Rent;
+import com.example.uddd_nhom14.entity.Room;
 
 public class Login extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.uddd_nhom14.obj;
+package com.example.uddd_nhom14.entity;
 
 public class Account {
     String username;

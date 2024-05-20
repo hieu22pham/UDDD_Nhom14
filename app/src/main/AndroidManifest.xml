@@ -16,10 +16,10 @@
         android:theme="@style/Theme.UDDD_Nhom14"
         tools:targetApi="31">
         <activity
-            android:name=".act.GiaHanPhong"
+            android:name=".activity.GiaHanPhong"
             android:exported="false" />
         <activity
-            android:name=".act.Login"
+            android:name=".activity.Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,10 +28,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".act.MenuSinhVien"
+            android:name=".activity.MenuSinhVien"
             android:exported="true"></activity>
         <activity
-            android:name=".act.MenuQuanTri"
+            android:name=".activity.MenuQuanTri"
             android:exported="false" />
     </application>
 
