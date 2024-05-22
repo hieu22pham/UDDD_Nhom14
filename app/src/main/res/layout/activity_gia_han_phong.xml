@@ -155,7 +155,8 @@
     </TableRow>
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -163,6 +164,109 @@
             android:layout_margin="5sp"
             android:text="Tiện ích:"
             android:textSize="20sp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Điều hòa"
+                android:textSize="20sp" />
 
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bình nóng lạnh"
+                android:textSize="20sp" />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Máy giặt"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:layout_weight="1"
+            android:text="Đối tượng ưu tiên:"
+            android:textSize="20sp" />
+        <Spinner
+            android:id="@+id/spnDoiTuongUT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:textSize="20sp" />
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="5sp"
+        android:text="Ngày đến hạn:"
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/tvNgayDenHan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5sp"
+        android:text="Ng:"
+        android:textSize="20sp" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5sp"
+            android:text="Gia hạn đến:"
+            android:textSize="20sp" />
+        <EditText
+            android:id="@+id/edtNgayGiaHan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:text=""
+            android:textSize="20sp" />
+        <Button
+            android:id="@+id/btnChonNgay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chọn"/>
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp">
+        <Button
+            android:id="@+id/btnHuyPhieu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hủy hợp đồng"
+            android:background="@drawable/btn_imp"
+            app:backgroundTint="@null"
+            android:layout_marginStart="20dp"/>
+        <Button
+            android:id="@+id/btnGuiPhieuGiaHan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gửi phiếu"
+            android:background="@drawable/btn_imp"
+            app:backgroundTint="@null"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="20sp"/>
+            
     </TableRow>
 </LinearLayout>

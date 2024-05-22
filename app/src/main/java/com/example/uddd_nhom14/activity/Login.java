@@ -133,7 +133,7 @@ public class Login extends AppCompatActivity {
 
     public void addSomeFakeRent() {
         DatabaseHelper db = new DatabaseHelper(this);
-        db.addARentToDatabase(new Rent("a", 501+"", "A"));
+        db.addARentToDatabase(new Rent("a", 501+"", "A", "01-06-2024"));
         db.close();
     }
 

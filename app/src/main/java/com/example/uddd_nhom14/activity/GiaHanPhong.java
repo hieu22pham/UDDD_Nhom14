@@ -4,6 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -15,9 +20,17 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.uddd_nhom14.R;
 import com.example.uddd_nhom14.database.DatabaseHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GiaHanPhong extends AppCompatActivity {
 
-    TextView tvNguoiLamPhieu, tvSoPhong, tvGiaPhong, tvLoaiPhong, tvKhu, tvTang;
+    TextView tvNguoiLamPhieu, tvSoPhong, tvGiaPhong, tvLoaiPhong, tvKhu, tvTang, tvNgayDenHan;
+    EditText edtNgayGiaHan;
+    Button btnChonNgay, btnHuyPhieu, btnGuiPhieuGiaHan;
+    Spinner spnDoiTuongUT;
+    ArrayList<String> spnList = new ArrayList<>();
+    ArrayAdapter<String> spnAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +51,12 @@ public class GiaHanPhong extends AppCompatActivity {
         tvLoaiPhong = findViewById(R.id.tvLoaiPhong);
         tvKhu = findViewById(R.id.tvKhu);
         tvTang = findViewById(R.id.tvTang);
+        tvNgayDenHan = findViewById(R.id.tvNgayDenHan);
+        edtNgayGiaHan = findViewById(R.id.edtNgayGiaHan);
+        btnChonNgay = findViewById(R.id.btnChonNgay);
+        btnHuyPhieu = findViewById(R.id.btnHuyPhieu);
+        btnGuiPhieuGiaHan = findViewById(R.id.btnGuiPhieuGiaHan);
+        SpinnerConfig();
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bundle");
         DatabaseHelper db = new DatabaseHelper(this);
@@ -64,10 +83,19 @@ public class GiaHanPhong extends AppCompatActivity {
                 int floor = cursor2.getInt(cursor2.getColumnIndex(DatabaseHelper.COLUMN_FLOOR));
                 tvTang.setText(String.valueOf(floor));
                 tvKhu.setText(roomarea);
+                tvNgayDenHan.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ENDDATE)));
             }
 
         }
-
         db.close();
+    }
+    public void SpinnerConfig() {
+        spnDoiTuongUT = findViewById(R.id.spnDoiTuongUT);
+        spnAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spnList);
+        spnDoiTuongUT.setAdapter(spnAdapter);
+        spnList.add("Không");
+        spnList.add("Hộ nghèo");
+        spnList.add("Gia đình chính sách");
+        spnAdapter.notifyDataSetChanged();
     }
 }

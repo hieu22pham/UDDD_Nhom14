@@ -34,6 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //Thông số bảng rentlish
     public static final String RENTLIST_TABLE_NAME = "rentlist";
     public static final String COLUMN_RENTID = "roomid";
+    public static final String COLUMN_ENDDATE = "enddate";
 
 
 
@@ -67,6 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_ROOMNUMBER + " TEXT, "
                 + COLUMN_AREA + " TEXT, "
                 + COLUMN_USERNAME + " TEXT, "
+                + COLUMN_ENDDATE + " TEXT, "
                 + "CONSTRAINT fk1 FOREIGN KEY(" + COLUMN_USERNAME + ") "
                 + " REFERENCES " + ACCOUNT_TABLE_NAME + " (" + COLUMN_USERNAME + "), "
                 + "CONSTRAINT fk2 FOREIGN KEY(" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA + ") "
@@ -133,6 +135,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_USERNAME, r.getUsername());
         cv.put(COLUMN_ROOMNUMBER, r.getRoomnumber());
         cv.put(COLUMN_AREA, r.getRoomarea());
+        cv.put(COLUMN_ENDDATE, r.getEnddate());
         db.insert(RENTLIST_TABLE_NAME, null, cv);
         db.update(RENTLIST_TABLE_NAME, cv, COLUMN_USERNAME + " = ?", new String[] {r.getUsername()});
     }
