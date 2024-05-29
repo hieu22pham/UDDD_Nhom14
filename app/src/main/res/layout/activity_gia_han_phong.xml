@@ -17,7 +17,8 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:title="Phiếu gia hạn phòng KTX"
-        app:titleTextColor="@color/cardview_light_background"/>
+        app:titleTextColor="@color/cardview_light_background" />
+
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
