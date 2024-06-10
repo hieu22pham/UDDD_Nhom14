@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.uddd_nhom14.R;
 import com.example.uddd_nhom14.database.DatabaseHelper;
 import com.example.uddd_nhom14.entity.Account;
+import com.example.uddd_nhom14.entity.Asset;
 import com.example.uddd_nhom14.entity.Rent;
 import com.example.uddd_nhom14.entity.Room;
 
@@ -33,6 +35,8 @@ public class Login extends AppCompatActivity {
         initAccountsDatabase();
         initRoomsDatabase();
         addSomeFakeRent();
+        addSomeAssetOfRoom();
+        addSession();
         getWidget();
     }
     @Override
@@ -70,6 +74,7 @@ public class Login extends AppCompatActivity {
             String password = edtPassword.getText()+"";
             if (authenticateUser(username, password)) {
                 if (role == 0) {
+                    saveSession(username);
                     Bundle bundle = new Bundle();
                     bundle.putString("username", username);
                     bundle.putInt("id", id);
@@ -134,6 +139,23 @@ public class Login extends AppCompatActivity {
     public void addSomeFakeRent() {
         DatabaseHelper db = new DatabaseHelper(this);
         db.addARentToDatabase(new Rent("a", 501+"", "A", "01-06-2024"));
+        db.close();
+    }
+
+    public void addSomeAssetOfRoom() {
+        DatabaseHelper db = new DatabaseHelper(this);
+        db.addAnAssetInfo(new Asset(501+"", "A", 1, 1, 0));
+        db.close();
+    }
+
+    public void addSession() {
+        DatabaseHelper db = new DatabaseHelper(this);
+        db.addSession("k");
+        db.close();
+    }
+    public void saveSession(String username) {
+        DatabaseHelper db = new DatabaseHelper(this);
+        db.changeSession(username);
         db.close();
     }
 

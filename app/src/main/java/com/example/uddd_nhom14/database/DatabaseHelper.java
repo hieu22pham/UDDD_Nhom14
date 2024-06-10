@@ -10,6 +10,7 @@ import com.example.uddd_nhom14.entity.Account;
 import com.example.uddd_nhom14.entity.Asset;
 import com.example.uddd_nhom14.entity.Profile;
 import com.example.uddd_nhom14.entity.Rent;
+import com.example.uddd_nhom14.entity.Request;
 import com.example.uddd_nhom14.entity.Room;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -50,6 +51,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PROFILEID = "profileid";
     public static final String COLUMN_SDT = "sdt";
     public static final String COLUMN_EMAIL = "email";
+
+    //
+    public static final String REQUEST_TABLE_NAME = "request";
+    public static final String COLUMN_REQUESTID = "requestid";
+    public static final String COLUMN_REQUESTTYPE = "requesttype"; // 1: gia hạn, 2:đk mới
+
 
 
     public DatabaseHelper(Context context) {
@@ -102,13 +109,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //
         String createTableQuery5 = "CREATE TABLE " + PROFILE_TABLE_NAME + "("
                 + COLUMN_PROFILEID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + COLUMN_USERNAME + " INTERGER, "
+                + COLUMN_USERNAME + " TEXT, "
                 + COLUMN_SDT + " TEXT, "
                 + COLUMN_EMAIL + " TEXT, "
                 + "CONSTRAINT fk4 FOREIGN KEY(" + COLUMN_USERNAME + ") "
                 + " REFERENCES " + ACCOUNT_TABLE_NAME + " (" + COLUMN_USERNAME + ")  )";
         db.execSQL(createTableQuery5);
-
+        //
+        String createTableQuery6 = "CREATE TABLE " + REQUEST_TABLE_NAME + "("
+                + COLUMN_REQUESTID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_REQUESTTYPE + " INTEGER, "
+                + COLUMN_ROOMNUMBER + " TEXT, "
+                + COLUMN_AREA + " TEXT, "
+                + COLUMN_USERNAME + " TEXT, "
+                + "CONSTRAINT fk5 FOREIGN KEY(" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA + ") "
+                + " REFERENCES " + ROOM_TABLE_NAME + " (" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA + "), "
+                + "CONSTRAINT fk6 FOREIGN KEY(" + COLUMN_USERNAME + ") "
+                + " REFERENCES " + ACCOUNT_TABLE_NAME + " (" + COLUMN_USERNAME + ")  )";
+        db.execSQL(createTableQuery6);
+        //
+        String createTableQuery7 = "CREATE TABLE session ( sessionid INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT ) ";
+        db.execSQL(createTableQuery7);
     }
 
     @Override
@@ -149,6 +170,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         return db.query(PROFILE_TABLE_NAME, null, COLUMN_USERNAME + " = ?", new String[]{username}, null, null, null);
     }
+    public Cursor getGiaHanRequestByUsername(String username) {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.query(REQUEST_TABLE_NAME, null, COLUMN_USERNAME + " = ?", new String[]{username}, null, null, null);
+    }
+    public Cursor getSession(){
+        SQLiteDatabase db = getReadableDatabase();
+        return db.query("session", null, null, null, null, null, null);
+    }
+
+
 
 
     public void addAccountToDatabase (Account a) {
@@ -199,5 +230,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_SDT, p.getSdt());
         cv.put(COLUMN_EMAIL, p.getEmail());
         db.insert(PROFILE_TABLE_NAME, null, cv);
+    }
+    public void addAGiaHanRequest(Request r){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_REQUESTTYPE, r.getRequesttype());
+        cv.put(COLUMN_USERNAME, r.getUsername());
+        cv.put(COLUMN_ROOMNUMBER, r.getRoomnumber());
+        cv.put(COLUMN_AREA, r.getArea());
+        db.insert(REQUEST_TABLE_NAME, null, cv);
+    }
+    public void addSession(String username) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_USERNAME, username);
+        db.insert("session", null, cv);
+    }
+    public void changeSession(String username) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_USERNAME, username);
+        db.update("session", cv, null, null);
     }
 }

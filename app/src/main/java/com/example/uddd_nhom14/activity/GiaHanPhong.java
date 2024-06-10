@@ -3,22 +3,32 @@ package com.example.uddd_nhom14.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.database.CursorWindowCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.uddd_nhom14.R;
 import com.example.uddd_nhom14.database.DatabaseHelper;
+import com.example.uddd_nhom14.entity.Request;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +36,14 @@ import java.util.List;
 public class GiaHanPhong extends AppCompatActivity {
 
     TextView tvNguoiLamPhieu, tvSoPhong, tvGiaPhong, tvLoaiPhong, tvKhu, tvTang, tvNgayDenHan;
+    CheckBox cbDieuHoa, cbBinhNongLanh, cbMayGiat;
     EditText edtNgayGiaHan;
-    Button btnChonNgay, btnHuyPhieu, btnGuiPhieuGiaHan;
+    Button btnChonNgay;
+    FloatingActionButton btnFl;
     Spinner spnDoiTuongUT;
     ArrayList<String> spnList = new ArrayList<>();
     ArrayAdapter<String> spnAdapter;
+    String username, roomnumber, roomarea;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +55,7 @@ public class GiaHanPhong extends AppCompatActivity {
             return insets;
         });
         getWidget();
+        registerForContextMenu(btnFl);
     }
     @SuppressLint("Range")
     public void getWidget() {
@@ -52,10 +66,18 @@ public class GiaHanPhong extends AppCompatActivity {
         tvKhu = findViewById(R.id.tvKhu);
         tvTang = findViewById(R.id.tvTang);
         tvNgayDenHan = findViewById(R.id.tvNgayDenHan);
+        cbDieuHoa = findViewById(R.id.cbDieuHoa); cbDieuHoa.setEnabled(false);
+        cbBinhNongLanh = findViewById(R.id.cbBinhNongLanh); cbBinhNongLanh.setEnabled(false);
+        cbMayGiat = findViewById(R.id.cbMayGiat); cbMayGiat.setEnabled(false);
         edtNgayGiaHan = findViewById(R.id.edtNgayGiaHan);
         btnChonNgay = findViewById(R.id.btnChonNgay);
-        btnHuyPhieu = findViewById(R.id.btnHuyPhieu);
-        btnGuiPhieuGiaHan = findViewById(R.id.btnGuiPhieuGiaHan);
+        btnFl = findViewById(R.id.floatingActionButton);
+        btnFl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openContextMenu(btnFl);
+            }
+        });
         SpinnerConfig();
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bundle");
@@ -64,15 +86,15 @@ public class GiaHanPhong extends AppCompatActivity {
         Cursor cursor = db.getRentByUsername(bundle.getString("username"));
         if (cursor.moveToFirst()) {
             //Lấy thông tin sinh viên từ bảng user nhờ cột username của bảng rentlist
-            String username = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_USERNAME));
+            username = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_USERNAME));
             Cursor cursor1 = db.getAccountByUsernameCursor(username);
             if (cursor1.moveToFirst()) {
                 String name = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_NAME));
                 tvNguoiLamPhieu.setText(name);
             }
             //Lấy thông tin phòng từ bảng rentlist cột roomnumber và area
-            String roomnumber = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ROOMNUMBER));
-            String roomarea = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_AREA));
+            roomnumber = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ROOMNUMBER));
+            roomarea = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_AREA));
             Cursor cursor2 = db.getRoomByRoomNumberAndAreaCursor(roomnumber, roomarea);
             if (cursor2.moveToFirst()) {
                 tvSoPhong.setText(roomnumber);
@@ -84,6 +106,24 @@ public class GiaHanPhong extends AppCompatActivity {
                 tvTang.setText(String.valueOf(floor));
                 tvKhu.setText(roomarea);
                 tvNgayDenHan.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ENDDATE)));
+
+                Cursor cursorAsset = db.getAssetInfo(roomnumber, roomarea);
+                try {
+                    if (cursorAsset.moveToFirst()){
+                        if (cursorAsset.getInt(cursorAsset.getColumnIndex(DatabaseHelper.COLUMN_HASAC)) == 1) {
+                            cbDieuHoa.setChecked(true);
+                        }
+                        if (cursorAsset.getInt(cursorAsset.getColumnIndex(DatabaseHelper.COLUMN_HASWH)) == 1) {
+                            cbBinhNongLanh.setChecked(true);
+                        }
+                        if (cursorAsset.getInt(cursorAsset.getColumnIndex(DatabaseHelper.COLUMN_HASWM)) == 1) {
+                            cbMayGiat.setChecked(true);
+                        }
+                    }
+                }
+                catch (CursorIndexOutOfBoundsException e) {
+                    Toast.makeText(this, "Cursor out of bound", Toast.LENGTH_LONG).show();
+                }
             }
 
         }
@@ -97,5 +137,31 @@ public class GiaHanPhong extends AppCompatActivity {
         spnList.add("Hộ nghèo");
         spnList.add("Gia đình chính sách");
         spnAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.giahanmenu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.gui) {
+            DatabaseHelper db = new DatabaseHelper(this);
+            Cursor cursor = db.getSession();
+            if (cursor.moveToFirst()) {
+                @SuppressLint("Range") Cursor cursorRequest = db.getGiaHanRequestByUsername(cursor.getString(cursor.getColumnIndex("username")));
+                if (cursorRequest.getCount() > 0) {
+                    Toast.makeText(this, "Yêu cầu đã được gửi đi", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    db.addAGiaHanRequest(new Request(username, roomnumber, roomarea, 1));
+                    Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        }
+        return super.onContextItemSelected(item);
     }
 }
