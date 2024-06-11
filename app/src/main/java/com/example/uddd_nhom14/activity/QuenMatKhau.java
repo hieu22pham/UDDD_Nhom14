@@ -1,6 +1,9 @@
-package com.example.uddd_nhom14;
+package com.example.uddd_nhom14.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,17 +11,27 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class otpForm extends AppCompatActivity {
+import com.example.uddd_nhom14.R;
 
+public class QuenMatKhau extends AppCompatActivity {
+    Button btnXacNhanQMK;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_otp_form);
+        setContentView(R.layout.activity_quen_mat_khau);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+        btnXacNhanQMK = findViewById(R.id.btnXacNhanQMK);
+        btnXacNhanQMK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(QuenMatKhau.this, otpForm.class);
+                startActivity(intent);
+            }
         });
     }
 }

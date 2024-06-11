@@ -1,4 +1,4 @@
-package com.example.uddd_nhom14;
+package com.example.uddd_nhom14.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.uddd_nhom14.R;
 
 public class MainActivity extends AppCompatActivity {
     Button qmk, qlp, pdk;

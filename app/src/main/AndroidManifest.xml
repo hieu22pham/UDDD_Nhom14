@@ -13,19 +13,19 @@
         android:theme="@style/Theme.UDDD_Nhom14"
         tools:targetApi="31">
         <activity
-            android:name=".phieuDangKy"
+            android:name=".activity.phieuDangKy"
             android:exported="false" />
         <activity
-            android:name=".quanLyPhieu"
+            android:name=".activity.quanLyPhieu"
             android:exported="false" />
         <activity
-            android:name=".otpForm"
+            android:name=".activity.otpForm"
             android:exported="false" />
         <activity
-            android:name=".QuenMatKhau"
+            android:name=".activity.QuenMatKhau"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

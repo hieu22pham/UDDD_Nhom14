@@ -1,4 +1,4 @@
-package com.example.uddd_nhom14;
+package com.example.uddd_nhom14.activity;
 
 import android.os.Bundle;
 
@@ -8,13 +8,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class quanLyPhieu extends AppCompatActivity {
+import com.example.uddd_nhom14.R;
+
+public class phieuDangKy extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_quan_ly_phieu);
+        setContentView(R.layout.activity_phieu_dang_ky);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
