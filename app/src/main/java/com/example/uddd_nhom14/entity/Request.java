@@ -2,13 +2,14 @@ package com.example.uddd_nhom14.entity;
 
 public class Request {
     String username, roomnumber, area;
-    int requesttype;
+    int requesttype, requeststatus;
 
-    public Request(String username, String roomnumber, String area, int requesttype) {
+    public Request(String username, String roomnumber, String area, int requesttype, int requeststatus) {
         this.username = username;
         this.roomnumber = roomnumber;
         this.area = area;
         this.requesttype = requesttype;
+        this.requeststatus = requeststatus;
     }
 
     public String getUsername() {
@@ -18,7 +19,6 @@ public class Request {
     public void setUsername(String username) {
         this.username = username;
     }
-
     public int getRequesttype() {
         return requesttype;
     }
@@ -41,5 +41,13 @@ public class Request {
 
     public void setArea(String area) {
         this.area = area;
+    }
+
+    public int getRequeststatus() {
+        return requeststatus;
+    }
+
+    public void setRequeststatus(int requeststatus) {
+        this.requeststatus = requeststatus;
     }
 }

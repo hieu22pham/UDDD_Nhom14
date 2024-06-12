@@ -50,6 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String REQUEST_TABLE_NAME = "request";
     public static final String COLUMN_REQUESTID = "requestid";
     public static final String COLUMN_REQUESTTYPE = "requesttype"; // 1: gia hạn, 2:đk mới
+    public static final String COLUMN_REQUESTSTATUS = "requeststatus";
 
 
 
@@ -106,6 +107,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_ROOMNUMBER + " TEXT, "
                 + COLUMN_AREA + " TEXT, "
                 + COLUMN_USERNAME + " TEXT, "
+                + COLUMN_REQUESTSTATUS + " INTEGER, "
                 + "CONSTRAINT fk5 FOREIGN KEY(" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA + ") "
                 + " REFERENCES " + ROOM_TABLE_NAME + " (" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA + "), "
                 + "CONSTRAINT fk6 FOREIGN KEY(" + COLUMN_USERNAME + ") "
@@ -157,6 +159,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getSession(){
         SQLiteDatabase db = getReadableDatabase();
         return db.query("session", null, null, null, null, null, null);
+    }
+    public Cursor getRequestList(){
+        SQLiteDatabase db = getReadableDatabase();
+        return db.query(REQUEST_TABLE_NAME, null, null , null, null, null, null);
     }
 
 
@@ -223,4 +229,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_USERNAME, username);
         db.update("session", cv, null, null);
     }
+
 }

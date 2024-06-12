@@ -36,7 +36,7 @@ import java.util.Objects;
 
 public class GiaHanPhong extends AppCompatActivity {
 
-    TextView tvNguoiLamPhieu, tvSoPhong, tvGiaPhong, tvLoaiPhong, tvKhu, tvTang, tvNgayDenHan;
+    TextView tvNguoiLamPhieu, tvSoPhong, tvGiaPhong, tvLoaiPhong, tvKhu, tvTang, tvKyHoc;
     CheckBox cbDieuHoa, cbBinhNongLanh, cbMayGiat;
     EditText edtNgayGiaHan;
     Button btnChonNgay;
@@ -66,7 +66,7 @@ public class GiaHanPhong extends AppCompatActivity {
         tvLoaiPhong = findViewById(R.id.tvLoaiPhong);
         tvKhu = findViewById(R.id.tvKhu);
         tvTang = findViewById(R.id.tvTang);
-        tvNgayDenHan = findViewById(R.id.tvNgayDenHan);
+        tvKyHoc = findViewById(R.id.tvKyHoc);
         cbDieuHoa = findViewById(R.id.cbDieuHoa); cbDieuHoa.setEnabled(false);
         cbBinhNongLanh = findViewById(R.id.cbBinhNongLanh); cbBinhNongLanh.setEnabled(false);
         cbMayGiat = findViewById(R.id.cbMayGiat); cbMayGiat.setEnabled(false);
@@ -106,7 +106,8 @@ public class GiaHanPhong extends AppCompatActivity {
                 int floor = cursor2.getInt(cursor2.getColumnIndex(DatabaseHelper.COLUMN_FLOOR));
                 tvTang.setText(String.valueOf(floor));
                 tvKhu.setText(roomarea);
-                tvNgayDenHan.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ENDDATE)));
+                String kh = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_KYHOC)) + " " + cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAMHOC));
+                tvKyHoc.setText(kh);
                 if (roomprice >= 700000) {
                     cbBinhNongLanh.setChecked(true);
                 }
@@ -151,7 +152,7 @@ public class GiaHanPhong extends AppCompatActivity {
                     Toast.makeText(this, "Yêu cầu đã được gửi đi", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    db.addAGiaHanRequest(new Request(username, roomnumber, roomarea, 1));
+                    db.addAGiaHanRequest(new Request(username, roomnumber, roomarea, 1, 0));
                     Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
                 }
             }
