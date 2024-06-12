@@ -1,14 +1,20 @@
 package com.example.uddd_nhom14.database;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.view.View;
 
 import com.example.uddd_nhom14.entity.Account;
+import com.example.uddd_nhom14.entity.Asset;
 import com.example.uddd_nhom14.entity.Profile;
-
+import com.example.uddd_nhom14.entity.Rent;
+import com.example.uddd_nhom14.entity.Room;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "mydatabase.db";
@@ -54,9 +60,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("DROP TABLE IF EXISTS " + ACCOUNT_TABLE_NAME);
+
+
         //Tạo bảng account
         String createTableQuery = "CREATE TABLE " + ACCOUNT_TABLE_NAME + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -87,25 +96,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + " REFERENCES " + ROOM_TABLE_NAME + " (" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA  + ")  )";
         db.execSQL(createTableQuery3);
         //
-        String createTableQuery4 = "CREATE TABLE " + ASSETS_TABLE_NAME + "("
-                + COLUMN_ASSETID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + COLUMN_HASAC + " INTERGER, "
-                + COLUMN_HASWH + " INTERGER, "
-                + COLUMN_HASWM + " INTERGER, "
-                + COLUMN_ROOMNUMBER + " TEXT, "
-                + COLUMN_AREA + " TEXT, "
-                + "CONSTRAINT fk3 FOREIGN KEY(" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA + ") "
-                + " REFERENCES " + ROOM_TABLE_NAME + " (" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA  + ")  )";
-        db.execSQL(createTableQuery4);
+
+
         //
+            String createTableQuery4 = "CREATE TABLE " + ASSETS_TABLE_NAME + "("
+                    + COLUMN_ASSETID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + COLUMN_HASAC + " INTEGER, "
+                    + COLUMN_HASWH + " INTEGER, "
+                    + COLUMN_HASWM + " INTEGER, "
+                    + COLUMN_ROOMNUMBER + " TEXT, "
+                    + COLUMN_AREA + " TEXT, "
+                    + "CONSTRAINT fk3 FOREIGN KEY(" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA + ") "
+                    + " REFERENCES " + ROOM_TABLE_NAME + " (" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA  + ")  )";
+            db.execSQL(createTableQuery4);
+
+        db.execSQL("DROP TABLE IF EXISTS " + ACCOUNT_TABLE_NAME);
         String createTableQuery5 = "CREATE TABLE " + PROFILE_TABLE_NAME + "("
                 + COLUMN_PROFILEID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + COLUMN_USERNAME + " INTERGER, "
+                + COLUMN_USERNAME + " TEXT, "
                 + COLUMN_SDT + " TEXT, "
                 + COLUMN_EMAIL + " TEXT, "
                 + "CONSTRAINT fk4 FOREIGN KEY(" + COLUMN_USERNAME + ") "
                 + " REFERENCES " + ACCOUNT_TABLE_NAME + " (" + COLUMN_USERNAME + ")  )";
         db.execSQL(createTableQuery5);
+
 
     }
 
@@ -114,8 +128,56 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + ACCOUNT_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + ROOM_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + RENTLIST_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + PROFILE_TABLE_NAME);
         onCreate(db);
     }
+    //.......
+    // Khanh code databasse o day
+    public int updatePasswordAccount(Account c, int id) {
+        SQLiteDatabase db = getWritableDatabase();
+        String updateQuery = "UPDATE " + ACCOUNT_TABLE_NAME + " SET " + COLUMN_PASSWORD + " = '" + c.getPassword() + "' WHERE " + COLUMN_ID + " = " + id;
+        db.execSQL(updateQuery);
+        Log.d(TAG, "updatePasswordAccount: " + updateQuery);
+        db.close();
+        return 1;
+    }
+//    public int updatePasswordAccount(Account c, int id) {
+//
+//        SQLiteDatabase db = null;
+//        try {
+//
+//            // Mở cơ sở dữ liệu để ghi
+//            db = getWritableDatabase();
+//
+//            // Tạo đối tượng ContentValues để chứa các giá trị mới
+//            ContentValues cv = new ContentValues();
+//            cv.put(COLUMN_PASSWORD, c.getPassword());
+//
+//            // Cập nhật cơ sở dữ liệu với giá trị mới
+//            int result = db.update(ACCOUNT_TABLE_NAME, cv, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
+//
+//            // Kiểm tra kết quả cập nhật
+//            if (result == 0) {
+//                return -1; // Không có hàng nào được cập nhật
+//            }
+//
+//            return 1; // Cập nhật thành công
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return -1; // Có lỗi xảy ra
+//        } finally {
+//            // Đảm bảo đóng cơ sở dữ liệu trong khối finally
+//            if (db != null && db.isOpen()) {
+//                db.close();
+//            }
+//        }
+//    }
+    public Cursor getAccountInfoById(int id) {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.query(ACCOUNT_TABLE_NAME, null, COLUMN_ID + " = ?", new String[]{String.valueOf(id)}, null, null, null);
+    }
+
+    //.......
 
     public Cursor getAccountByUsernameAndPasswordCursor(String username, String password) {
         SQLiteDatabase db = getReadableDatabase();
@@ -159,7 +221,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(ACCOUNT_TABLE_NAME, null, cv);
         db.update(ACCOUNT_TABLE_NAME, cv, COLUMN_USERNAME + " = ?", new String[] {a.getUsername()});
     }
-
+    public void addRoomToDatabase(Room r){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_ROOMNUMBER, r.getRoomnumber());
+        cv.put(COLUMN_AREA, r.getArea());
+        cv.put(COLUMN_FLOOR, r.getFloor());
+        cv.put(COLUMN_ROOMTYPE, r.getRoomtype());
+        cv.put(COLUMN_ROOMPRICE, r.getRoomprice());
+        db.insert(ROOM_TABLE_NAME, null, cv);
+        db.update(ROOM_TABLE_NAME, cv, COLUMN_ROOMNUMBER + " = ?", new String[] {r.getRoomnumber()});
+    }
+    public void addARentToDatabase(Rent r) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_USERNAME, r.getUsername());
+        cv.put(COLUMN_ROOMNUMBER, r.getRoomnumber());
+        cv.put(COLUMN_AREA, r.getRoomarea());
+        cv.put(COLUMN_ENDDATE, r.getEnddate());
+        db.insert(RENTLIST_TABLE_NAME, null, cv);
+        db.update(RENTLIST_TABLE_NAME, cv, COLUMN_USERNAME + " = ?", new String[] {r.getUsername()});
+    }
+    public void addAnAssetInfo(Asset a) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_HASAC, a.getHasac());
+        cv.put(COLUMN_HASWH, a.getHaswh());
+        cv.put(COLUMN_HASWM, a.getHaswm());
+        cv.put(COLUMN_ROOMNUMBER, a.getRoomnumber());
+        cv.put(COLUMN_AREA, a.getRoomarea());
+        db.insert(ASSETS_TABLE_NAME, null, cv);
+    }
     public void addAnProfile(Profile p){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();

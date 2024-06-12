@@ -6,6 +6,7 @@ android {
     namespace = "com.example.uddd_nhom14"
     compileSdk = 34
 
+
     defaultConfig {
         applicationId = "com.example.uddd_nhom14"
         minSdk = 24
@@ -40,4 +41,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+
 }

@@ -1,12 +1,14 @@
 package com.example.uddd_nhom14.entity;
 
-public class Account {
+import java.io.Serializable;
+
+public class Account implements Serializable {
     String username;
     String password;
     String name;
     int role;
 
-    public Account() {}
+    public Account(int i, String khanh, String number, String đặngKhánh, int i1) {}
 
     public Account(String username, String password, String name, int role) {
         this.username = username;
