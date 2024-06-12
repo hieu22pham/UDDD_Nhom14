@@ -16,8 +16,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.uddd_nhom14.R;
 import com.example.uddd_nhom14.database.DatabaseHelper;
 import com.example.uddd_nhom14.entity.Account;
+import com.example.uddd_nhom14.entity.Profile;
 import com.example.uddd_nhom14.entity.Rent;
 import com.example.uddd_nhom14.entity.Room;
+
+import java.util.Calendar;
 
 public class Login extends AppCompatActivity {
 
@@ -33,6 +36,8 @@ public class Login extends AppCompatActivity {
         initAccountsDatabase();
         initRoomsDatabase();
         addSomeFakeRent();
+        addSession();
+        addSomeProfiles();
         getWidget();
     }
     @Override
@@ -70,6 +75,7 @@ public class Login extends AppCompatActivity {
             String password = edtPassword.getText()+"";
             if (authenticateUser(username, password)) {
                 if (role == 0) {
+                    saveSession(username);
                     Bundle bundle = new Bundle();
                     bundle.putString("username", username);
                     bundle.putInt("id", id);
@@ -114,10 +120,10 @@ public class Login extends AppCompatActivity {
     public void initAccountsDatabase() {
         DatabaseHelper db = new DatabaseHelper(this);
 
-        db.addAccountToDatabase(new Account("a", "a", "Tạ Thị Lạng", 0));
+        db.addAccountToDatabase(new Account("a", "a", 0));
         db.addAccountToDatabase(new Account("b", "b",  1));
-        db.addAccountToDatabase(new Account("admin", "123456", "", 1));
-        db.addAccountToDatabase(new Account("e", "e", "Kha Tỷ Cân", 0));
+        db.addAccountToDatabase(new Account("admin", "123456", 1));
+        db.addAccountToDatabase(new Account("e", "e", 0));
 
         db.close();
     }
@@ -133,7 +139,26 @@ public class Login extends AppCompatActivity {
 
     public void addSomeFakeRent() {
         DatabaseHelper db = new DatabaseHelper(this);
-        db.addARentToDatabase(new Rent("a", 501+"", "A", "01-06-2024"));
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        db.addARentToDatabase(new Rent("a", 501+"", "A", "1", year+""));
+        db.close();
+    }
+
+
+    public void addSession() {
+        DatabaseHelper db = new DatabaseHelper(this);
+        db.addSession("k");
+        db.close();
+    }
+    public void saveSession(String username) {
+        DatabaseHelper db = new DatabaseHelper(this);
+        db.changeSession(username);
+        db.close();
+    }
+    public void addSomeProfiles() {
+        DatabaseHelper db = new DatabaseHelper(this);
+        db.addAProfile(new Profile("a", "0838388833", "uwa@gmail.com", "Tạ Thị Lạng"));
         db.close();
     }
 
