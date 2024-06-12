@@ -53,10 +53,10 @@ public class DuyetPhieu extends AppCompatActivity {
                 String username = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_USERNAME));
                 String roomNumber = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ROOMNUMBER));
                 String area = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_AREA));
-                String endDate = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_));
+
 
                 String rentInfo = "Username: " + username + "\nRoom Number: " + roomNumber +
-                        "\nArea: " + area + "\nEnd Date: " + endDate;
+                        "\nArea: " + area + "\nEnd Date: " ;
                 rentList.add(rentInfo);
             }
             cursor.close();

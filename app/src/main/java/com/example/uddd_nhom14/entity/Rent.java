@@ -3,7 +3,8 @@ package com.example.uddd_nhom14.entity;
 public class Rent {
     String username, roomnumber, roomarea, enddate;
 
-    public Rent() {}
+    public Rent(String a, String s, String string, String number, String s1) {
+    }
 
     public Rent(String username, String roomnumber, String roomarea, String enddate) {
         this.username = username;
@@ -44,6 +45,7 @@ public class Rent {
         this.enddate = enddate;
     }
 
-    public byte[] getNamhoc() {
-    }
+
+
+
 }
