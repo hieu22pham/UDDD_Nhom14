@@ -70,8 +70,8 @@ public class GiaHanPhong extends AppCompatActivity {
         cbDieuHoa = findViewById(R.id.cbDieuHoa); cbDieuHoa.setEnabled(false);
         cbBinhNongLanh = findViewById(R.id.cbBinhNongLanh); cbBinhNongLanh.setEnabled(false);
         cbMayGiat = findViewById(R.id.cbMayGiat); cbMayGiat.setEnabled(false);
-        edtNgayGiaHan = findViewById(R.id.edtNgayGiaHan);
-        btnChonNgay = findViewById(R.id.btnChonNgay);
+//        edtNgayGiaHan = findViewById(R.id.edtNgayGiaHan);
+//        btnChonNgay = findViewById(R.id.btnChonNgay);
         btnFl = findViewById(R.id.floatingActionButton);
         btnFl.setOnClickListener(new View.OnClickListener() {
             @Override
