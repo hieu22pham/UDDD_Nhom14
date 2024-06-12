@@ -98,18 +98,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //
 
 
-        //
-            String createTableQuery4 = "CREATE TABLE " + ASSETS_TABLE_NAME + "("
-                    + COLUMN_ASSETID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + COLUMN_HASAC + " INTEGER, "
-                    + COLUMN_HASWH + " INTEGER, "
-                    + COLUMN_HASWM + " INTEGER, "
-                    + COLUMN_ROOMNUMBER + " TEXT, "
-                    + COLUMN_AREA + " TEXT, "
-                    + "CONSTRAINT fk3 FOREIGN KEY(" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA + ") "
-                    + " REFERENCES " + ROOM_TABLE_NAME + " (" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA  + ")  )";
-            db.execSQL(createTableQuery4);
-
+        //asset
+        String createTableQuery4 = "CREATE TABLE " + ASSETS_TABLE_NAME + "("
+                + COLUMN_ASSETID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_HASAC + " INTEGER, "
+                + COLUMN_HASWH + " INTEGER, "
+                + COLUMN_HASWM + " INTEGER, "
+                + COLUMN_ROOMNUMBER + " TEXT, "
+                + COLUMN_AREA + " TEXT, "
+                + "CONSTRAINT fk3 FOREIGN KEY(" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA + ") "
+                + " REFERENCES " + ROOM_TABLE_NAME + " (" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA  + ")  )";
+        db.execSQL(createTableQuery4);
+        // profile
         db.execSQL("DROP TABLE IF EXISTS " + ACCOUNT_TABLE_NAME);
         String createTableQuery5 = "CREATE TABLE " + PROFILE_TABLE_NAME + "("
                 + COLUMN_PROFILEID + " INTEGER PRIMARY KEY AUTOINCREMENT, "

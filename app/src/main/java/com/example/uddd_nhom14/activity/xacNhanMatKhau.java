@@ -50,7 +50,7 @@ public class xacNhanMatKhau extends AppCompatActivity {
         assert bundle != null;
         idAcc = bundle.getInt("id");
         acc = (Account)bundle.getSerializable("account");
-        Toast.makeText(xacNhanMatKhau.this, "id la:" + idAcc + " account: " + acc.getUsername() + " " + acc.getPassword(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(xacNhanMatKhau.this, "id la:" + idAcc + " account: " + acc.getUsername() + " " + acc.getPassword(), Toast.LENGTH_LONG).show();
 
         
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
