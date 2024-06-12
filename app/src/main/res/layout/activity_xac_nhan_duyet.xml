@@ -27,18 +27,19 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="wrap_content"
+                android:layout_width="113dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="10sp"
                 android:text="Người làm phiếu : "
-                android:textSize="18dp"
 
-                android:layout_margin="10sp"/>
+                android:textSize="18dp" />
+
             <TextView
                 android:id="@+id/txtuser"
-                android:layout_width="wrap_content"
+                android:layout_width="106dp"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:layout_margin="10sp"/>
+                android:layout_margin="10sp"
+                android:textSize="18dp" />
         </TableRow>
 
         <TableRow
@@ -249,7 +250,7 @@
                 app:backgroundTint="#303F9F" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/ưbtn_tuchoi"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
 
