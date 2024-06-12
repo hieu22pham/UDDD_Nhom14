@@ -44,6 +44,16 @@ public class quanLyPhieuAdapter extends ArrayAdapter<itemListQLP> {
         tenPhieu.setText(myItem.getTenPhieu());
         TextView trangThai = convertView.findViewById(R.id.txtTrangThai);
         trangThai.setText(myItem.getTrangThai());
+
+        //đặt màu cho trạng thái
+        if (myItem.getTrangThai().equals("Đã duyệt")) {
+            trangThai.setTextColor(context.getResources().getColor(R.color.approved_color));
+        } else if (myItem.getTrangThai().equals("Không duyệt")) {
+            trangThai.setTextColor(context.getResources().getColor(R.color.pending_color));
+        } else {
+            // Default text color for other statuses
+            trangThai.setTextColor(context.getResources().getColor(android.R.color.black));
+        }
         // Đặt màu nền cho các dòng
         if (position == 0) {
             convertView.setBackgroundColor(context.getResources().getColor(R.color.first_row_color)); // Màu đỏ cho dòng đầu tiên

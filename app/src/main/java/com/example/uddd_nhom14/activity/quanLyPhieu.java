@@ -1,8 +1,11 @@
 package com.example.uddd_nhom14.activity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
@@ -99,6 +102,20 @@ public class quanLyPhieu extends AppCompatActivity {
 
         myadapter = new quanLyPhieuAdapter(quanLyPhieu.this, R.layout.layout_item_quan_ly_phieu, myList);
         listViewQuanLyPhieu.setAdapter(myadapter);
-
+        listViewQuanLyPhieu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    String trangThai = myList.get(position).getTrangThai();
+                    if (trangThai.equals("Chưa duyệt")) {
+                        Intent intent = new Intent(quanLyPhieu.this, XacNhanDuyet.class);
+                        intent.putExtra("maPhieu", myList.get(position).getMaPhieu());
+                        startActivity(intent);
+                    }
+                } catch (NumberFormatException e) {
+                    Log.e("quanLyPhieu", "Invalid trangThai value", e);
+                }
+            }
+        });
     }
 }

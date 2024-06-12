@@ -23,7 +23,7 @@
             android:name=".activity.xacNhanMatKhau"
             android:exported="false" />
         <activity
-            android:name=".activity.phieuDangKy"
+            android:name=".activity.XacNhanDuyet"
             android:exported="false" />
         <activity
             android:name=".activity.quanLyPhieu"
