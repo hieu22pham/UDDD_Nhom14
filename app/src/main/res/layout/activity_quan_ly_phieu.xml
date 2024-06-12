@@ -19,6 +19,7 @@
         android:textSize="34sp" />
 
     <ListView
+        android:id="@+id/listViewQuanLyPhieu"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

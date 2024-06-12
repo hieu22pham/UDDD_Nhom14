@@ -20,7 +20,7 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="449dp"
+        android:layout_height="481dp"
         android:clipToPadding="true">
 
         <TableRow
@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:paddingLeft="30px"
-                android:text="Giá(tháng):"
+                android:text="Giá(kỳ):"
                 android:textColorLink="#000000" />
 
             <TextView
@@ -159,107 +159,78 @@
                 android:text="Tiện ích:"
                 android:textColorLink="#000000" />
 
-            <TextView
-                android:id="@+id/textView9"
+            <CheckBox
+                android:id="@+id/checkBox"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="TextView" />
+                android:layout_height="wrap_content"
+                android:text="Nóng lạnh" />
+
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="30dp">
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:paddingLeft="30px"
-                android:text="Đối tượng ưu tiên:"
-                android:textColorLink="#000000" />
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content" />
+
+            <CheckBox
+                android:id="@+id/checkBox3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Điều hòa" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <CheckBox
+                android:id="@+id/checkBox4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Máy giặt" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="43dp"
                 android:text="TextView" />
 
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="30dp">
+            android:layout_height="22dp">
 
             <TextView
-                android:id="@+id/textView20"
+                android:id="@+id/textView16"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:paddingLeft="30px"
-                android:text="Số tháng:"
-                android:textColorLink="#000000" />
+                android:layout_height="match_parent"
+                android:text="TextView" />
 
             <TextView
-                android:id="@+id/tvSoThang"
+                android:id="@+id/textView19"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="6" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="30dp">
-
-            <TextView
-                android:id="@+id/textView22"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:paddingLeft="30px"
-                android:text="Ngày vào ở:"
-                android:textColorLink="#000000" />
-
-            <TextView
-                android:id="@+id/tvNgayVaoO"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="12-6-2024" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="30dp">
-
-            <TextView
-                android:id="@+id/textView24"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:paddingLeft="30px"
-                android:text="Ngày kết thúc:" />
-
-            <TextView
-                android:id="@+id/tvNgayKetThuc"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="12-12-2024" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="30dp">
-
-            <TextView
-                android:id="@+id/textView26"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:paddingLeft="30px"
-                android:text="Tổng tiền:" />
-
-            <TextView
-                android:id="@+id/tvTongTien"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="TextView"
-                android:textColorLink="#000000" />
+                android:layout_height="wrap_content"
+                android:text="TextView" />
         </TableRow>
 
     </TableLayout>

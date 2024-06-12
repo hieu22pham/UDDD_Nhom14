@@ -1,5 +1,6 @@
 package com.example.uddd_nhom14.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,6 +21,8 @@ import com.example.uddd_nhom14.R;
 import com.example.uddd_nhom14.database.DatabaseHelper;
 import com.example.uddd_nhom14.entity.Account;
 import com.example.uddd_nhom14.entity.Profile;
+import com.example.uddd_nhom14.entity.Request;
+import com.example.uddd_nhom14.entity.Room;
 
 import java.io.File;
 
@@ -31,6 +34,17 @@ public class QuenMatKhau extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_quen_mat_khau);
+ // Xóa database
+//        // Lấy context của ứng dụng
+//        Context context = getApplicationContext();
+//
+//        // Tên của cơ sở dữ liệu bạn muốn xóa
+//        String dbName = "mydatabase.db";
+//
+
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        //dbHelper.onUpgrade(db, 1, 2);
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -168,15 +182,32 @@ public class QuenMatKhau extends AppCompatActivity {
         return -1;
     }
 
-    public void initAccountsDatabase() {
+    public void initDatabase() {
         DatabaseHelper db = new DatabaseHelper(this);
-        //db.addAccountToDatabase(new Account( "khanh", "12345", "Đặng Khánh", 1));
-        db.addAccountToDatabase(new Account( "Khai", "12345", "Đặng Khải", 1));
+        //acc
+        db.addAccountToDatabase(new Account( "khanh", "12345", "Đặng Khánh", 1));
+        db.addAccountToDatabase(new Account( "khai", "12345", "Đặng Khải", 1));
+        db.addAccountToDatabase(new Account( "bao", "12345", "Đặng Bảo", 1));
+        db.addAccountToDatabase(new Account( "dung", "12345", "Đặng Dung", 1));
+        //profile
+        db.addAnProfile(new Profile("khanh", "0393511358", "bangbang2k3kul@gmail.com"));
+        db.addAnProfile(new Profile("khai", "0385946895", "abc@gmail.com"));
+        db.addAnProfile(new Profile("bao", "3", "abc@gmail.com"));
+        db.addAnProfile(new Profile("dung", "2", "abc@gmail.com"));
+        //room
 
-//        db.addAnProfile(new Profile("khanh", "0393511358", "bangbang2k3kul@gmail.com"));
-//        db.addAnProfile(new Profile("Khai", "0385946895", "abc@gmail.com"));
-//        db.addAnProfile(new Profile("bao", "3", "abc@gmail.com"));
-//        db.addAnProfile(new Profile("dung", "2", "abc@gmail.com"));
+        db.addRoomToDatabase(new Room("501", "A", 5+"", 700000 , 4));
+        db.addRoomToDatabase(new Room("502", "A", 5+"", 800000, 4));
+        db.addRoomToDatabase(new Room("301", "A", 3+"", 1200000 , 4));
+        db.addRoomToDatabase(new Room("303", "A", 3+"", 800000, 4));
+
+        //request
+        db.addAGiaHanRequest(new Request("khanh", "501", "A", "1", "2024", 1, 0));
+        db.addAGiaHanRequest(new Request("khai", "502", "A", "2", "2024", 2, 1));
+        db.addAGiaHanRequest(new Request("bao", "301", "A", "1", "2024", 2, 0));
+        db.addAGiaHanRequest(new Request("dung", "303", "A", "2", "2024", 1, 0));
+        db.addAGiaHanRequest(new Request("khanh", "501", "A", "1", "2024", 2, -1));
+        db.addAGiaHanRequest(new Request("khai", "301", "A", "2", "2024", 1, 0));
 
         db.close();
     }
