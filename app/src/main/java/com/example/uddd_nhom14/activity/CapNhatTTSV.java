@@ -94,7 +94,6 @@ public class CapNhatTTSV extends AppCompatActivity {
                         b.setNegativeButton("Hủy bỏ", null);
                         b.create();
                         b.show();
-
                     }
                 }
             });
@@ -103,6 +102,5 @@ public class CapNhatTTSV extends AppCompatActivity {
         catch (Exception e) {
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
-
     }
 }

@@ -44,7 +44,7 @@ public class GiaHanPhong extends AppCompatActivity {
     Spinner spnDoiTuongUT;
     ArrayList<String> spnList = new ArrayList<>();
     ArrayAdapter<String> spnAdapter;
-    String username, roomnumber, roomarea;
+    String username, roomnumber, roomarea, kyhoc, namhoc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +106,9 @@ public class GiaHanPhong extends AppCompatActivity {
                 int floor = cursor2.getInt(cursor2.getColumnIndex(DatabaseHelper.COLUMN_FLOOR));
                 tvTang.setText(String.valueOf(floor));
                 tvKhu.setText(roomarea);
-                String kh = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_KYHOC)) + " " + cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAMHOC));
+                kyhoc = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_KYHOC));
+                namhoc = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAMHOC));
+                String kh = kyhoc + " - " + namhoc;
                 tvKyHoc.setText(kh);
                 if (roomprice >= 700000) {
                     cbBinhNongLanh.setChecked(true);
@@ -153,7 +155,7 @@ public class GiaHanPhong extends AppCompatActivity {
                     Toast.makeText(this, "Yêu cầu đã được gửi đi", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    db.addAGiaHanRequest(new Request(username, roomnumber, roomarea, 1, 0));
+                    db.addAGiaHanRequest(new Request(username, roomnumber, roomarea, kyhoc, namhoc, 1, 0));
                     Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
                 }
             }
