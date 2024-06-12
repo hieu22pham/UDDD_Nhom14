@@ -46,7 +46,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_SDT = "sdt";
     public static final String COLUMN_EMAIL = "email";
 
-    //
+    //request
     public static final String REQUEST_TABLE_NAME = "request";
     public static final String COLUMN_REQUESTID = "requestid";
     public static final String COLUMN_REQUESTTYPE = "requesttype"; // 1: gia hạn, 2:đk mới
