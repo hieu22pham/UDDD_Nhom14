@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.uddd_nhom14.R;
 import com.example.uddd_nhom14.database.DatabaseHelper;
 import com.example.uddd_nhom14.entity.Account;
-import com.example.uddd_nhom14.entity.Asset;
+import com.example.uddd_nhom14.entity.Profile;
 import com.example.uddd_nhom14.entity.Rent;
 import com.example.uddd_nhom14.entity.Room;
 
@@ -35,8 +34,8 @@ public class Login extends AppCompatActivity {
         initAccountsDatabase();
         initRoomsDatabase();
         addSomeFakeRent();
-        addSomeAssetOfRoom();
         addSession();
+        addSomeProfiles();
         getWidget();
     }
     @Override
@@ -119,10 +118,10 @@ public class Login extends AppCompatActivity {
     public void initAccountsDatabase() {
         DatabaseHelper db = new DatabaseHelper(this);
 
-        db.addAccountToDatabase(new Account("a", "a", "Tạ Thị Lạng", 0));
+        db.addAccountToDatabase(new Account("a", "a", 0));
         db.addAccountToDatabase(new Account("b", "b",  1));
-        db.addAccountToDatabase(new Account("admin", "123456", "", 1));
-        db.addAccountToDatabase(new Account("e", "e", "Kha Tỷ Cân", 0));
+        db.addAccountToDatabase(new Account("admin", "123456", 1));
+        db.addAccountToDatabase(new Account("e", "e", 0));
 
         db.close();
     }
@@ -142,11 +141,6 @@ public class Login extends AppCompatActivity {
         db.close();
     }
 
-    public void addSomeAssetOfRoom() {
-        DatabaseHelper db = new DatabaseHelper(this);
-        db.addAnAssetInfo(new Asset(501+"", "A", 1, 1, 0));
-        db.close();
-    }
 
     public void addSession() {
         DatabaseHelper db = new DatabaseHelper(this);
@@ -156,6 +150,11 @@ public class Login extends AppCompatActivity {
     public void saveSession(String username) {
         DatabaseHelper db = new DatabaseHelper(this);
         db.changeSession(username);
+        db.close();
+    }
+    public void addSomeProfiles() {
+        DatabaseHelper db = new DatabaseHelper(this);
+        db.addAProfile(new Profile("a", "0838388833", "uwa@gmail.com", "Tạ Thị Lạng"));
         db.close();
     }
 

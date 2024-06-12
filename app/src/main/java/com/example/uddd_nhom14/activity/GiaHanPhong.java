@@ -32,6 +32,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class GiaHanPhong extends AppCompatActivity {
 
@@ -87,7 +88,7 @@ public class GiaHanPhong extends AppCompatActivity {
         if (cursor.moveToFirst()) {
             //Lấy thông tin sinh viên từ bảng user nhờ cột username của bảng rentlist
             username = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_USERNAME));
-            Cursor cursor1 = db.getAccountByUsernameCursor(username);
+            Cursor cursor1 = db.getProfileInfo(username);
             if (cursor1.moveToFirst()) {
                 String name = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_NAME));
                 tvNguoiLamPhieu.setText(name);
@@ -106,23 +107,17 @@ public class GiaHanPhong extends AppCompatActivity {
                 tvTang.setText(String.valueOf(floor));
                 tvKhu.setText(roomarea);
                 tvNgayDenHan.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ENDDATE)));
-
-                Cursor cursorAsset = db.getAssetInfo(roomnumber, roomarea);
-                try {
-                    if (cursorAsset.moveToFirst()){
-                        if (cursorAsset.getInt(cursorAsset.getColumnIndex(DatabaseHelper.COLUMN_HASAC)) == 1) {
-                            cbDieuHoa.setChecked(true);
-                        }
-                        if (cursorAsset.getInt(cursorAsset.getColumnIndex(DatabaseHelper.COLUMN_HASWH)) == 1) {
-                            cbBinhNongLanh.setChecked(true);
-                        }
-                        if (cursorAsset.getInt(cursorAsset.getColumnIndex(DatabaseHelper.COLUMN_HASWM)) == 1) {
-                            cbMayGiat.setChecked(true);
-                        }
-                    }
+                if (roomprice >= 700000) {
+                    cbBinhNongLanh.setChecked(true);
                 }
-                catch (CursorIndexOutOfBoundsException e) {
-                    Toast.makeText(this, "Cursor out of bound", Toast.LENGTH_LONG).show();
+                if (roomprice >= 800000) {
+                    cbDieuHoa.setChecked(true);
+                    cbBinhNongLanh.setChecked(true);
+                }
+                if (roomprice >= 1200000) {
+                    cbDieuHoa.setChecked(true);
+                    cbMayGiat.setChecked(true);
+                    cbBinhNongLanh.setChecked(true);
                 }
             }
 

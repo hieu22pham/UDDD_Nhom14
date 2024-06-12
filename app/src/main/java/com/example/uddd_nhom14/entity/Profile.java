@@ -1,12 +1,13 @@
 package com.example.uddd_nhom14.entity;
 
 public class Profile {
-    String username, sdt, email;
+    String username, sdt, email, name;
 
-    public Profile(String username, String sdt, String email) {
+    public Profile(String username, String sdt, String email, String name) {
         this.username = username;
         this.sdt = sdt;
         this.email = email;
+        this.name = name;
     }
 
     public String getUsername() {
@@ -31,5 +32,13 @@ public class Profile {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

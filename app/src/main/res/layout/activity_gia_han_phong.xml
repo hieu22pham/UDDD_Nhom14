@@ -80,6 +80,42 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="5sp"
+                android:text="Khu:"
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/tvKhu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5sp"
+                android:text="Ng:"
+                android:textSize="20sp" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5sp"
+                android:text="Tầng:"
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/tvTang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5sp"
+                android:text="Ng:"
+                android:textSize="20sp" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5sp"
                 android:text="Giá:"
                 android:textSize="20sp" />
             <TextView
@@ -120,42 +156,7 @@
                 android:text=" Người"
                 android:textSize="20sp" />
         </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="5sp"
-                android:text="Khu:"
-                android:textSize="20sp" />
-            <TextView
-                android:id="@+id/tvKhu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5sp"
-                android:text="Ng:"
-                android:textSize="20sp" />
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="5sp"
-                android:text="Tầng:"
-                android:textSize="20sp" />
-            <TextView
-                android:id="@+id/tvTang"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5sp"
-                android:text="Ng:"
-                android:textSize="20sp" />
-        </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -229,29 +230,7 @@
                 android:textSize="20sp" />
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="5sp"
-                android:text="Gia hạn đến:"
-                android:textSize="20sp" />
-            <EditText
-                android:id="@+id/edtNgayGiaHan"
-                android:layout_width="48dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="5sp"
-                android:text=""
-                android:textSize="20sp" />
-            <Button
-                android:id="@+id/btnChonNgay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chọn"/>
-        </TableRow>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -273,3 +252,29 @@
 
     </LinearLayout>
 </ScrollView>
+
+
+
+<!--<TableRow-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content">-->
+<!--<TextView-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_weight="1"-->
+<!--    android:layout_margin="5sp"-->
+<!--    android:text="Gia hạn đến:"-->
+<!--    android:textSize="20sp" />-->
+<!--<EditText-->
+<!--    android:id="@+id/edtNgayGiaHan"-->
+<!--    android:layout_width="48dp"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_margin="5sp"-->
+<!--    android:text=""-->
+<!--    android:textSize="20sp" />-->
+<!--<Button-->
+<!--    android:id="@+id/btnChonNgay"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:text="Chọn"/>-->
+<!--</TableRow>-->
