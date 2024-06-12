@@ -215,6 +215,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_USERNAME, r.getUsername());
         cv.put(COLUMN_ROOMNUMBER, r.getRoomnumber());
         cv.put(COLUMN_AREA, r.getArea());
+        cv.put(COLUMN_REQUESTSTATUS, r.getRequeststatus());
         db.insert(REQUEST_TABLE_NAME, null, cv);
     }
     public void addSession(String username) {
