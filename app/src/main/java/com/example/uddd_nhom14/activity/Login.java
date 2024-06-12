@@ -20,6 +20,8 @@ import com.example.uddd_nhom14.entity.Profile;
 import com.example.uddd_nhom14.entity.Rent;
 import com.example.uddd_nhom14.entity.Room;
 
+import java.util.Calendar;
+
 public class Login extends AppCompatActivity {
 
     EditText edtUsername, edtPassword;
@@ -137,7 +139,9 @@ public class Login extends AppCompatActivity {
 
     public void addSomeFakeRent() {
         DatabaseHelper db = new DatabaseHelper(this);
-        db.addARentToDatabase(new Rent("a", 501+"", "A", "01-06-2024"));
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        db.addARentToDatabase(new Rent("a", 501+"", "A", "1", year+""));
         db.close();
     }
 
