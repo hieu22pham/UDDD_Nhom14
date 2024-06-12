@@ -19,7 +19,7 @@ import com.example.uddd_nhom14.database.DatabaseHelper;
 
 public class MenuSinhVien extends AppCompatActivity {
 
-    Button btnDangKyPhong, btnGiaHanPhong;
+    Button btnDangKyPhong, btnGiaHanPhong, btnCapNhatTTSV;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +38,7 @@ public class MenuSinhVien extends AppCompatActivity {
         Bundle bundle = intent.getBundleExtra("bundle");
         btnDangKyPhong = findViewById(R.id.btnDangKyPhong);
         btnGiaHanPhong = findViewById(R.id.btnGiaHanPhong);
+        btnCapNhatTTSV = findViewById(R.id.btnCapNhatTTSV);
         btnGiaHanPhong.setOnClickListener(v -> {
             DatabaseHelper dbHelper = new DatabaseHelper(this);
             SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -47,13 +48,17 @@ public class MenuSinhVien extends AppCompatActivity {
                 Intent intent1 = new Intent(MenuSinhVien.this, GiaHanPhong.class);
                 intent1.putExtra("bundle", bundle);
                 startActivity(intent1);
-                Toast.makeText(MenuSinhVien.this, cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ROOMNUMBER)), Toast.LENGTH_LONG).show();
+//                Toast.makeText(MenuSinhVien.this, cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ROOMNUMBER)), Toast.LENGTH_LONG).show();
             }
             else {
                 Toast.makeText(MenuSinhVien.this, "Chưa có", Toast.LENGTH_LONG).show();
             }
             cursor.close();
             db.close();
+        });
+        btnCapNhatTTSV.setOnClickListener(v -> {
+            Intent intent2 = new Intent(MenuSinhVien.this, CapNhatTTSV.class);
+            startActivity(intent2);
         });
     }
 

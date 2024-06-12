@@ -149,6 +149,7 @@ public class GiaHanPhong extends AppCompatActivity {
             if (cursor.moveToFirst()) {
                 @SuppressLint("Range") Cursor cursorRequest = db.getGiaHanRequestByUsername(cursor.getString(cursor.getColumnIndex("username")));
                 if (cursorRequest.getCount() > 0) {
+
                     Toast.makeText(this, "Yêu cầu đã được gửi đi", Toast.LENGTH_LONG).show();
                 }
                 else {

@@ -38,4 +38,14 @@
         android:layout_marginTop="30dp"
         app:backgroundTint="@null"
         android:background="@drawable/btn_imp"/>
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnCapNhatTTSV"
+        android:text="Cập nhật thông tin"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        app:backgroundTint="#EB8F4848"
+        android:background="@drawable/btn_imp"/>
 </LinearLayout>

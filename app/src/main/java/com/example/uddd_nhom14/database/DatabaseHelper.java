@@ -21,7 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_USERNAME = "username";
     public static final String COLUMN_PASSWORD = "password";
-    public static final String COLUMN_ROLE = "role";
+    public static final String COLUMN_ROLE = "role"; // 0 sv 1 admin
 
     //Thông số bảng rooms
     public static final String ROOM_TABLE_NAME = "rooms";
@@ -166,6 +166,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    public void updateAccount (Account a) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_USERNAME, a.getUsername());
+        cv.put(COLUMN_PASSWORD, a.getPassword());
+        cv.put(COLUMN_ROLE, a.getRole());
+        db.update(ACCOUNT_TABLE_NAME, cv, COLUMN_USERNAME + " = ?", new String[] {a.getUsername()});
+    }
+    public void updateProfile (Profile p) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_USERNAME, p.getUsername());
+        cv.put(COLUMN_SDT, p.getSdt());
+        cv.put(COLUMN_EMAIL, p.getEmail());
+        cv.put(COLUMN_NAME, p.getName());
+        db.update(PROFILE_TABLE_NAME, cv, COLUMN_USERNAME + " = ?", new String[] {p.getUsername()});
+    }
+
 
 
     public void addAccountToDatabase (Account a) {
@@ -207,6 +225,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_EMAIL, p.getEmail());
         cv.put(COLUMN_NAME, p.getName());
         db.insert(PROFILE_TABLE_NAME, null, cv);
+        db.update(PROFILE_TABLE_NAME, cv, COLUMN_USERNAME + " = ?", new String[] {p.getUsername()});
     }
     public void addAGiaHanRequest(Request r){
         SQLiteDatabase db = getWritableDatabase();
@@ -217,6 +236,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_AREA, r.getArea());
         cv.put(COLUMN_REQUESTSTATUS, r.getRequeststatus());
         db.insert(REQUEST_TABLE_NAME, null, cv);
+        db.update(REQUEST_TABLE_NAME, cv, COLUMN_USERNAME + " = ?", new String[] {r.getUsername()});
     }
     public void addSession(String username) {
         SQLiteDatabase db = getWritableDatabase();
