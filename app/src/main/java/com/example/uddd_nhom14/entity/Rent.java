@@ -1,16 +1,15 @@
 package com.example.uddd_nhom14.entity;
 
 public class Rent {
-    String username, roomnumber, roomarea, kyhoc, namhoc;
+    String username, roomnumber, roomarea, enddate;
 
     public Rent() {}
 
-    public Rent(String username, String roomnumber, String roomarea, String kyhoc, String namhoc) {
+    public Rent(String username, String roomnumber, String roomarea, String enddate) {
         this.username = username;
         this.roomnumber = roomnumber;
         this.roomarea = roomarea;
-        this.kyhoc = kyhoc;
-        this.namhoc = namhoc;
+        this.enddate = enddate;
     }
 
     public String getUsername() {
@@ -37,19 +36,14 @@ public class Rent {
         this.roomarea = roomarea;
     }
 
-    public String getKyhoc() {
-        return kyhoc;
+    public String getEnddate() {
+        return enddate;
     }
 
-    public void setKyhoc(String kyhoc) {
-        this.kyhoc = kyhoc;
+    public void setEnddate(String enddate) {
+        this.enddate = enddate;
     }
 
-    public String getNamhoc() {
-        return namhoc;
-    }
-
-    public void setNamhoc(String namhoc) {
-        this.namhoc = namhoc;
+    public byte[] getNamhoc() {
     }
 }
