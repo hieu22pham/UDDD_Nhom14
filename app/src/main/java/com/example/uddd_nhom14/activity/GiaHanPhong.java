@@ -86,7 +86,7 @@ public class GiaHanPhong extends AppCompatActivity {
         assert bundle != null;
         Cursor cursor = db.getRentByUsername(bundle.getString("username"));
         if (cursor.moveToFirst()) {
-            //Lấy thông tin sinh viên từ bảng user nhờ cột username của bảng rentlist
+            //Lấy thông tin sinh viên từ bảng profile nhờ cột username của bảng rentlist
             username = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_USERNAME));
             Cursor cursor1 = db.getProfileInfo(username);
             if (cursor1.moveToFirst()) {
@@ -123,7 +123,6 @@ public class GiaHanPhong extends AppCompatActivity {
                     cbBinhNongLanh.setChecked(true);
                 }
             }
-
         }
         db.close();
     }
