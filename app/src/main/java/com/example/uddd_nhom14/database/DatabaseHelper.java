@@ -229,4 +229,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_USERNAME, username);
         db.update("session", cv, null, null);
     }
+    public boolean updateRequestStatus(int requestId, int newStatus) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_REQUESTSTATUS, newStatus);
+        int result = db.update(REQUEST_TABLE_NAME, contentValues, COLUMN_REQUESTID + " = ?", new String[]{String.valueOf(requestId)});
+        return result > 0;
+    }
 }

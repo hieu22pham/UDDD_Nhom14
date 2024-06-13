@@ -124,6 +124,7 @@ public class Login extends AppCompatActivity {
         db.addAccountToDatabase(new Account("b", "b",  1));
         db.addAccountToDatabase(new Account("admin", "123456", 1));
         db.addAccountToDatabase(new Account("e", "e", 0));
+        db.addAccountToDatabase(new Account("f", "f", 0));
 
         db.close();
     }
@@ -131,8 +132,14 @@ public class Login extends AppCompatActivity {
     public void initRoomsDatabase () {
         DatabaseHelper db = new DatabaseHelper(this);
 
-        for (int i = 501; i < 503; i++) {
+        for (int i = 501; i <= 510; i++) {
             db.addRoomToDatabase(new Room(i+"", "A", 5+"", 800000, 4));
+        }
+        for (int i = 511; i <= 520; i++) {
+            db.addRoomToDatabase(new Room(i+"", "B", 5+"", 800000, 4));
+        }
+        for (int i = 521; i <= 530; i++) {
+            db.addRoomToDatabase(new Room(i+"", "C", 5+"", 800000, 4));
         }
         db.close();
     }
@@ -142,6 +149,7 @@ public class Login extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         db.addARentToDatabase(new Rent("a", 501+"", "A", "1", year+""));
+        db.addARentToDatabase(new Rent("f", 501+"", "A", "1", year+""));
         db.close();
     }
 
