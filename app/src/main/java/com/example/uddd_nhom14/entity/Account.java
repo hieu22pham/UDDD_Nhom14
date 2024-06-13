@@ -1,11 +1,21 @@
 package com.example.uddd_nhom14.entity;
 
-public class Account {
+import java.io.Serializable;
+
+public class Account implements Serializable {
     String username;
     String password;
+    String name;
     int role;
 
-    public Account() {}
+    public Account(int i, String khanh, String number, String đặngKhánh, int i1) {}
+
+    public Account(String username, String password, String name, int role) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.role = role;
+    }
 
     public Account(String username, String password, int role) {
         this.username = username;
@@ -37,4 +47,11 @@ public class Account {
         this.role = role;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

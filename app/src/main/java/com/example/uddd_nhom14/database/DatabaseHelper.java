@@ -3,8 +3,6 @@ package com.example.uddd_nhom14.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -260,145 +258,154 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_USERNAME, username);
         db.update("session", cv, null, null);
     }
-        public void deleteRoomFromDatabase (String roomnumber, String area){
-            SQLiteDatabase db = this.getWritableDatabase();
-            String whereClause = COLUMN_ROOMNUMBER + " = ? AND " + COLUMN_AREA + " = ?";
-            String[] whereArgs = {roomnumber, area};
-            db.delete(ROOM_TABLE_NAME, whereClause, whereArgs);
-        }
-
-        public List<Room> getRoom () {
-            List<Room> roomList = new ArrayList<>();
-            SQLiteDatabase db = this.getReadableDatabase();
-
-            String selectQuery = "SELECT * FROM " + ROOM_TABLE_NAME;
-            Cursor cursor = db.rawQuery(selectQuery, null);
-
-            int roomIdIndex = cursor.getColumnIndex(COLUMN_ROOMID);
-            int roomNumberIndex = cursor.getColumnIndex(COLUMN_ROOMNUMBER);
-            int areaIndex = cursor.getColumnIndex(COLUMN_AREA);
-            int floorIndex = cursor.getColumnIndex(COLUMN_FLOOR);
-            int roomTypeIndex = cursor.getColumnIndex(COLUMN_ROOMTYPE);
-            int roomPriceIndex = cursor.getColumnIndex(COLUMN_ROOMPRICE);
-
-            if (cursor.moveToFirst()) {
-                do {
-                    int roomId = (roomIdIndex >= 0) ? cursor.getInt(roomIdIndex) : -1;
-                    String roomNumber = (roomNumberIndex >= 0) ? cursor.getString(roomNumberIndex) : "";
-                    String area = (areaIndex >= 0) ? cursor.getString(areaIndex) : "";
-                    String floor = (floorIndex >= 0) ? cursor.getString(floorIndex) : "";
-                    int roomType = (roomTypeIndex >= 0) ? cursor.getInt(roomTypeIndex) : 0;
-                    int roomPrice = (roomPriceIndex >= 0) ? cursor.getInt(roomPriceIndex) : 0;
-
-                    Room room = new Room(roomNumber, area, floor, roomPrice, roomType);
-                    roomList.add(room);
-                } while (cursor.moveToNext());
-            }
-
-            cursor.close();
-            db.close();
-            return roomList;
-        }
-
-        public List<Room> getRoomByArea (String area){
-            List<Room> roomList = new ArrayList<>();
-            SQLiteDatabase db = this.getReadableDatabase();
-
-            String selectQuery = "SELECT * FROM " + ROOM_TABLE_NAME + " WHERE " + COLUMN_AREA + " = ?";
-            String[] selectionArgs = {area};
-            Cursor cursor = db.rawQuery(selectQuery, selectionArgs);
-
-            int roomIdIndex = cursor.getColumnIndex(COLUMN_ROOMID);
-            int roomNumberIndex = cursor.getColumnIndex(COLUMN_ROOMNUMBER);
-            int floorIndex = cursor.getColumnIndex(COLUMN_FLOOR);
-            int roomTypeIndex = cursor.getColumnIndex(COLUMN_ROOMTYPE);
-            int roomPriceIndex = cursor.getColumnIndex(COLUMN_ROOMPRICE);
-
-            if (cursor.moveToFirst()) {
-                do {
-                    int roomId = (roomIdIndex >= 0) ? cursor.getInt(roomIdIndex) : -1;
-                    String roomNumber = (roomNumberIndex >= 0) ? cursor.getString(roomNumberIndex) : "";
-                    String floor = (floorIndex >= 0) ? cursor.getString(floorIndex) : "";
-                    int roomType = (roomTypeIndex >= 0) ? cursor.getInt(roomTypeIndex) : 0;
-                    int roomPrice = (roomPriceIndex >= 0) ? cursor.getInt(roomPriceIndex) : 0;
-
-                    Room room = new Room(roomNumber, area, floor, roomPrice, roomType);
-                    roomList.add(room);
-                } while (cursor.moveToNext());
-            }
-
-            cursor.close();
-            db.close();
-            return roomList;
-        }
-
-        public void updateRoom (Room r){
-            SQLiteDatabase db = getWritableDatabase();
-            ContentValues cv = new ContentValues();
-            cv.put(COLUMN_ROOMNUMBER, r.getRoomnumber());
-            cv.put(COLUMN_AREA, r.getArea());
-            cv.put(COLUMN_FLOOR, r.getFloor());
-            cv.put(COLUMN_ROOMTYPE, r.getRoomtype());
-            cv.put(COLUMN_ROOMPRICE, r.getRoomprice());
-            db.update(ROOM_TABLE_NAME, cv, COLUMN_ROOMNUMBER + " = ? AND " + COLUMN_AREA + " = ?", new String[]{r.getRoomnumber(), r.getArea()});
-        }
-
-        public List<Account> getRegistrantsByRoom (String roomNumber, String area){
-            List<Account> registrants = new ArrayList<>();
-            SQLiteDatabase db = this.getReadableDatabase();
-            String query = "SELECT * FROM " + RENTLIST_TABLE_NAME + " r "
-                    + "INNER JOIN " + ACCOUNT_TABLE_NAME + " a "
-                    + "ON r." + COLUMN_USERNAME + " = a." + COLUMN_USERNAME + " "
-                    + "WHERE r." + COLUMN_ROOMNUMBER + " = ? AND r." + COLUMN_AREA + " = ?";
-            Cursor cursor = db.rawQuery(query, new String[]{roomNumber, area});
-
-            int usernameIndex = cursor.getColumnIndex(COLUMN_USERNAME);
-            int passwordIndex = cursor.getColumnIndex(COLUMN_PASSWORD);
-            int roleIndex = cursor.getColumnIndex(COLUMN_ROLE);
-
-            if (cursor.moveToFirst()) {
-                do {
-                    if (usernameIndex >= 0 && passwordIndex >= 0 && roleIndex >= 0) {
-                        String username = cursor.getString(usernameIndex);
-                        String password = cursor.getString(passwordIndex);
-                        int role = cursor.getInt(roleIndex);
-
-                        Account account = new Account(username, password, role);
-                        registrants.add(account);
-                    }
-                } while (cursor.moveToNext());
-            }
-            cursor.close();
-            return registrants;
-        }
-
-
-        public void removeRegistrant (Account account){
-            SQLiteDatabase db = this.getWritableDatabase();
-            String whereClause = COLUMN_USERNAME + " = ?";
-            String[] whereArgs = {account.getUsername()};
-            db.delete(RENTLIST_TABLE_NAME, whereClause, whereArgs);
-        }
-
-        public Boolean checkRoomExist (String roomNumber, String roomArea){
-            SQLiteDatabase db = this.getReadableDatabase();
-            String selection = COLUMN_ROOMNUMBER + " = ? AND " + COLUMN_AREA + " = ?";
-            String[] selectionArgs = {roomNumber, roomArea};
-            Cursor cursor = db.query(ROOM_TABLE_NAME, null, selection, selectionArgs, null, null, null);
-
-            boolean exists = cursor.getCount() > 0;
-            cursor.close();
-            return exists;
-        }
-
-        public void addRoom (Room r){
-            SQLiteDatabase db = getWritableDatabase();
-            ContentValues cv = new ContentValues();
-            cv.put(COLUMN_ROOMNUMBER, r.getRoomnumber());
-            cv.put(COLUMN_AREA, r.getArea());
-            cv.put(COLUMN_FLOOR, r.getFloor());
-            cv.put(COLUMN_ROOMTYPE, r.getRoomtype());
-            cv.put(COLUMN_ROOMPRICE, r.getRoomprice());
-            db.insert(ROOM_TABLE_NAME, null, cv);
-        }
+    public void deleteRoomFromDatabase (String roomnumber, String area){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String whereClause = COLUMN_ROOMNUMBER + " = ? AND " + COLUMN_AREA + " = ?";
+        String[] whereArgs = {roomnumber, area};
+        db.delete(ROOM_TABLE_NAME, whereClause, whereArgs);
     }
+
+    public List<Room> getRoom () {
+        List<Room> roomList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM " + ROOM_TABLE_NAME;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int roomIdIndex = cursor.getColumnIndex(COLUMN_ROOMID);
+        int roomNumberIndex = cursor.getColumnIndex(COLUMN_ROOMNUMBER);
+        int areaIndex = cursor.getColumnIndex(COLUMN_AREA);
+        int floorIndex = cursor.getColumnIndex(COLUMN_FLOOR);
+        int roomTypeIndex = cursor.getColumnIndex(COLUMN_ROOMTYPE);
+        int roomPriceIndex = cursor.getColumnIndex(COLUMN_ROOMPRICE);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int roomId = (roomIdIndex >= 0) ? cursor.getInt(roomIdIndex) : -1;
+                String roomNumber = (roomNumberIndex >= 0) ? cursor.getString(roomNumberIndex) : "";
+                String area = (areaIndex >= 0) ? cursor.getString(areaIndex) : "";
+                String floor = (floorIndex >= 0) ? cursor.getString(floorIndex) : "";
+                int roomType = (roomTypeIndex >= 0) ? cursor.getInt(roomTypeIndex) : 0;
+                int roomPrice = (roomPriceIndex >= 0) ? cursor.getInt(roomPriceIndex) : 0;
+
+                Room room = new Room(roomNumber, area, floor, roomPrice, roomType);
+                roomList.add(room);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return roomList;
+    }
+
+    public List<Room> getRoomByArea (String area){
+        List<Room> roomList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM " + ROOM_TABLE_NAME + " WHERE " + COLUMN_AREA + " = ?";
+        String[] selectionArgs = {area};
+        Cursor cursor = db.rawQuery(selectQuery, selectionArgs);
+
+        int roomIdIndex = cursor.getColumnIndex(COLUMN_ROOMID);
+        int roomNumberIndex = cursor.getColumnIndex(COLUMN_ROOMNUMBER);
+        int floorIndex = cursor.getColumnIndex(COLUMN_FLOOR);
+        int roomTypeIndex = cursor.getColumnIndex(COLUMN_ROOMTYPE);
+        int roomPriceIndex = cursor.getColumnIndex(COLUMN_ROOMPRICE);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int roomId = (roomIdIndex >= 0) ? cursor.getInt(roomIdIndex) : -1;
+                String roomNumber = (roomNumberIndex >= 0) ? cursor.getString(roomNumberIndex) : "";
+                String floor = (floorIndex >= 0) ? cursor.getString(floorIndex) : "";
+                int roomType = (roomTypeIndex >= 0) ? cursor.getInt(roomTypeIndex) : 0;
+                int roomPrice = (roomPriceIndex >= 0) ? cursor.getInt(roomPriceIndex) : 0;
+
+                Room room = new Room(roomNumber, area, floor, roomPrice, roomType);
+                roomList.add(room);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return roomList;
+    }
+
+    public void updateRoom (Room r){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_ROOMNUMBER, r.getRoomnumber());
+        cv.put(COLUMN_AREA, r.getArea());
+        cv.put(COLUMN_FLOOR, r.getFloor());
+        cv.put(COLUMN_ROOMTYPE, r.getRoomtype());
+        cv.put(COLUMN_ROOMPRICE, r.getRoomprice());
+        db.update(ROOM_TABLE_NAME, cv, COLUMN_ROOMNUMBER + " = ? AND " + COLUMN_AREA + " = ?", new String[]{r.getRoomnumber(), r.getArea()});
+    }
+
+    public List<Account> getRegistrantsByRoom (String roomNumber, String area){
+        List<Account> registrants = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + RENTLIST_TABLE_NAME + " r "
+                + "INNER JOIN " + ACCOUNT_TABLE_NAME + " a "
+                + "ON r." + COLUMN_USERNAME + " = a." + COLUMN_USERNAME + " "
+                + "WHERE r." + COLUMN_ROOMNUMBER + " = ? AND r." + COLUMN_AREA + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{roomNumber, area});
+
+        int usernameIndex = cursor.getColumnIndex(COLUMN_USERNAME);
+        int passwordIndex = cursor.getColumnIndex(COLUMN_PASSWORD);
+        int roleIndex = cursor.getColumnIndex(COLUMN_ROLE);
+
+        if (cursor.moveToFirst()) {
+            do {
+                if (usernameIndex >= 0 && passwordIndex >= 0 && roleIndex >= 0) {
+                    String username = cursor.getString(usernameIndex);
+                    String password = cursor.getString(passwordIndex);
+                    int role = cursor.getInt(roleIndex);
+
+                    Account account = new Account(username, password, role);
+                    registrants.add(account);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return registrants;
+    }
+
+
+    public void removeRegistrant (Account account){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String whereClause = COLUMN_USERNAME + " = ?";
+        String[] whereArgs = {account.getUsername()};
+        db.delete(RENTLIST_TABLE_NAME, whereClause, whereArgs);
+    }
+
+    public Boolean checkRoomExist (String roomNumber, String roomArea){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selection = COLUMN_ROOMNUMBER + " = ? AND " + COLUMN_AREA + " = ?";
+        String[] selectionArgs = {roomNumber, roomArea};
+        Cursor cursor = db.query(ROOM_TABLE_NAME, null, selection, selectionArgs, null, null, null);
+
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        return exists;
+    }
+
+    public void addRoom (Room r){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_ROOMNUMBER, r.getRoomnumber());
+        cv.put(COLUMN_AREA, r.getArea());
+        cv.put(COLUMN_FLOOR, r.getFloor());
+        cv.put(COLUMN_ROOMTYPE, r.getRoomtype());
+        cv.put(COLUMN_ROOMPRICE, r.getRoomprice());
+        db.insert(ROOM_TABLE_NAME, null, cv);
+    }
+
+    public boolean updateRequestStatus(int requestId, int newStatus) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_REQUESTSTATUS, newStatus);
+        int result = db.update(REQUEST_TABLE_NAME, contentValues, COLUMN_REQUESTID + " = ?", new String[]{String.valueOf(requestId)});
+        return result > 0;
+    }
+}
+
