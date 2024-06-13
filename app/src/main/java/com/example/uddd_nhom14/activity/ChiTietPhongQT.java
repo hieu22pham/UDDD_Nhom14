@@ -1,7 +1,9 @@
 package com.example.uddd_nhom14.activity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -141,11 +143,15 @@ public class ChiTietPhongQT extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("Range")
     private void loadAndDisplayRegistrants(String roomNumber, String area) {
         registrants = dbHelper.getRegistrantsByRoom(roomNumber, area);
         List<String> names = new ArrayList<>();
         for (Account registrant : registrants) {
-            names.add(registrant.getName());
+            Cursor cursor = dbHelper.getProfileInfo(registrant.getUsername());
+            String n = "";
+            if (cursor.moveToFirst()) n = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME));
+            names.add(n);
         }
 
         registrantsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, names);
@@ -175,6 +181,7 @@ public class ChiTietPhongQT extends AppCompatActivity {
                     .setTitle("Xác nhận xóa")
                     .setMessage("Bạn có chắc chắn muốn xóa người đăng ký này không?")
                     .setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
+                        @SuppressLint("Range")
                         public void onClick(DialogInterface dialog, int which) {
                             Account accountToRemove = registrants.get(selectedItemPosition);
                             // Xóa người đăng ký khỏi database
@@ -183,7 +190,10 @@ public class ChiTietPhongQT extends AppCompatActivity {
                             registrants.remove(selectedItemPosition);
                             List<String> names = new ArrayList<>();
                             for (Account registrant : registrants) {
-                                names.add(registrant.getName());
+                                Cursor cursor = dbHelper.getProfileInfo(registrant.getUsername());
+                                String n = "";
+                                if (cursor.moveToFirst()) n = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME));
+                                names.add(n);
                             }
                             registrantsAdapter = new ArrayAdapter<>(ChiTietPhongQT.this, android.R.layout.simple_list_item_1, names);
                             lvSinhVienO.setAdapter(registrantsAdapter);

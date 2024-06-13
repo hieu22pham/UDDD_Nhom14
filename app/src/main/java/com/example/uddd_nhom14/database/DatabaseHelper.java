@@ -353,15 +353,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Cursor cursor = db.rawQuery(query, new String[]{roomNumber, area});
 
             int usernameIndex = cursor.getColumnIndex(COLUMN_USERNAME);
-            int nameIndex = cursor.getColumnIndex(COLUMN_NAME);
             int passwordIndex = cursor.getColumnIndex(COLUMN_PASSWORD);
             int roleIndex = cursor.getColumnIndex(COLUMN_ROLE);
 
             if (cursor.moveToFirst()) {
                 do {
-                    if (usernameIndex >= 0 && nameIndex >= 0 && passwordIndex >= 0 && roleIndex >= 0) {
+                    if (usernameIndex >= 0 && passwordIndex >= 0 && roleIndex >= 0) {
                         String username = cursor.getString(usernameIndex);
-                        String name = cursor.getString(nameIndex);
                         String password = cursor.getString(passwordIndex);
                         int role = cursor.getInt(roleIndex);
 
