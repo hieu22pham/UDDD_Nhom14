@@ -42,7 +42,7 @@ public class QuenMatKhau extends AppCompatActivity {
 //        String dbName = "mydatabase.db";
 //
 
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
+
         //SQLiteDatabase db = dbHelper.getWritableDatabase();
         //dbHelper.onUpgrade(db, 1, 2);
 
@@ -190,10 +190,10 @@ public class QuenMatKhau extends AppCompatActivity {
         db.addAccountToDatabase(new Account( "bao", "12345", "Đặng Bảo", 1));
         db.addAccountToDatabase(new Account( "dung", "12345", "Đặng Dung", 1));
         //profile
-        db.addAnProfile(new Profile("khanh", "0393511358", "bangbang2k3kul@gmail.com"));
-        db.addAnProfile(new Profile("khai", "0385946895", "abc@gmail.com"));
-        db.addAnProfile(new Profile("bao", "3", "abc@gmail.com"));
-        db.addAnProfile(new Profile("dung", "2", "abc@gmail.com"));
+        db.addAProfile(new Profile("khanh", "0393511358", "bangbang2k3kul@gmail.com", "khanh"));
+        db.addAProfile(new Profile("khai", "0385946895", "abc@gmail.com", "khai"));
+        db.addAProfile(new Profile("bao", "3", "abc@gmail.com", "bao"));
+        db.addAProfile(new Profile("dung", "2", "abc@gmail.com", "dung"));
         //room
 
         db.addRoomToDatabase(new Room("501", "A", 5+"", 700000 , 4));

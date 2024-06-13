@@ -105,7 +105,8 @@ public class xacNhanMatKhau extends AppCompatActivity {
                                     if(check == 1)
                                     {
                                         Toast.makeText(xacNhanMatKhau.this, "Đổi mật khẩu thành công  " , Toast.LENGTH_LONG).show();
-
+                                        Intent intent = new Intent(xacNhanMatKhau.this, Login.class);
+                                        startActivity(intent);
                                     }
                                     else {
                                         Toast.makeText(xacNhanMatKhau.this, "Đổi mật khẩu thất bại  " , Toast.LENGTH_LONG).show();

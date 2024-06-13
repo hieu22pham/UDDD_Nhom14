@@ -169,6 +169,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         return db.query(ROOM_TABLE_NAME, null, COLUMN_ROOMNUMBER + " = ? AND " + COLUMN_AREA + " = ?", new String[]{roomnumber, area}, null, null, null);
     }
+
+
     public Cursor getRentByUsername(String username) {
         SQLiteDatabase db = getReadableDatabase();
         return db.query(RENTLIST_TABLE_NAME, null, COLUMN_USERNAME + " = ?", new String[]{username}, null, null, null);
@@ -220,13 +222,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(RENTLIST_TABLE_NAME, null, cv);
         db.update(RENTLIST_TABLE_NAME, cv, COLUMN_USERNAME + " = ?", new String[] {r.getUsername()});
     }
-    public void addAnProfile(Profile p){
+    public void addAProfile(Profile p){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_USERNAME, p.getUsername());
         cv.put(COLUMN_SDT, p.getSdt());
         cv.put(COLUMN_EMAIL, p.getEmail());
+        cv.put(COLUMN_NAME, p.getName());
         db.insert(PROFILE_TABLE_NAME, null, cv);
+        db.update(PROFILE_TABLE_NAME, cv, COLUMN_USERNAME + " = ?", new String[] {p.getUsername()});
     }
     public void addAGiaHanRequest(Request r){
         SQLiteDatabase db = getWritableDatabase();
