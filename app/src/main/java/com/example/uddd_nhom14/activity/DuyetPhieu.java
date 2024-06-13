@@ -34,9 +34,8 @@ public class DuyetPhieu extends AppCompatActivity {
         CustomAdapter adapter = new CustomAdapter(this, rentList);
 
 
-
         listViewRents.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        onResume(adapter);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -52,8 +51,8 @@ public class DuyetPhieu extends AppCompatActivity {
                 // Tạo một Intent để chuyển sang activity XacNhanDuyet và nhận lại kết quả
                 Intent intent = new Intent(DuyetPhieu.this, XacNhanDuyet.class);
                 intent.putExtra("selectedItem", selectedItem);
-                startActivityForResult(intent, REQUEST_UPDATE_LIST);
-                onResume(adapter);
+                startActivity(intent);
+
             });
 
     }
@@ -81,6 +80,7 @@ public class DuyetPhieu extends AppCompatActivity {
                 String requestType = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_REQUESTTYPE));
                 String requestStatus = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_REQUESTSTATUS));
                 String loai = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ROOMNUMBER));
+                String khu = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_AREA));
                 String rtype="";
                 if(requestType.equals("0")){
                     rtype="Phiếu đăng ký";
@@ -101,9 +101,10 @@ public class DuyetPhieu extends AppCompatActivity {
                 }
                 String rentInfo = "                    ID Phiếu: "+requestId+
                         "\n                    Loại phiếu: " +rtype +
-                        "\n"+dem+ "                 Trạng Thái: "+status +
+                        "\n"+dem+ "                 Trạng Thái : "+status +
                         "\n                    Người tạo : "+requestusername+
-                        "\n                    phòng : "+loai;
+                        "\n                    phòng : "+loai+
+                        "\n                    khu : "+khu;
                 rentList.add(rentInfo);
             }
             cursor.close();

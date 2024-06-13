@@ -178,7 +178,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10sp"
-                android:text="Ngày vào ở  : "
+                android:text="Kỳ học:"
                 android:textSize="18dp" />
 
             <TextView
@@ -199,7 +199,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10sp"
-                android:text="Ngày kết thúc : "
+                android:text="Năm"
                 android:textSize="18dp" />
 
             <TextView
@@ -220,7 +220,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10sp"
-                android:text="Tổng tiền : "
+                android:text="Tiền phòng:"
                 android:textSize="18dp" />
 
             <TextView
@@ -246,7 +246,7 @@
                 app:backgroundTint="#303F9F" />
 
             <Button
-                android:id="@+id/ưbtn_tuchoi"
+                android:id="@+id/btn_tuchoi"
                 android:layout_width="181dp"
                 android:layout_height="wrap_content"
 

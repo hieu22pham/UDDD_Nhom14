@@ -107,6 +107,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_ROOMNUMBER + " TEXT, "
                 + COLUMN_AREA + " TEXT, "
                 + COLUMN_USERNAME + " TEXT, "
+                + COLUMN_KYHOC+ " TEXT, "
+                + COLUMN_NAMHOC + " TEXT, "
                 + COLUMN_REQUESTSTATUS + " INTEGER, "
                 + "CONSTRAINT fk5 FOREIGN KEY(" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA + ") "
                 + " REFERENCES " + ROOM_TABLE_NAME + " (" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA + "), "
@@ -188,6 +190,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(ROOM_TABLE_NAME, null, cv);
         db.update(ROOM_TABLE_NAME, cv, COLUMN_ROOMNUMBER + " = ?", new String[] {r.getRoomnumber()});
     }
+
     public void addARentToDatabase(Rent r) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
