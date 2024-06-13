@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DuyetPhieu extends AppCompatActivity {
-
+    CustomAdapter adapter;
     private static final int REQUEST_UPDATE_LIST = 101;
     private ListView listViewRents;
     private DatabaseHelper databaseHelper;
@@ -31,11 +31,9 @@ public class DuyetPhieu extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
 
         List<String> rentList = getAllRents();
-        CustomAdapter adapter = new CustomAdapter(this, rentList);
-
-
+        adapter= new CustomAdapter(this, rentList);
         listViewRents.setAdapter(adapter);
-        onResume(adapter);
+        onResume();
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -52,7 +50,6 @@ public class DuyetPhieu extends AppCompatActivity {
                 Intent intent = new Intent(DuyetPhieu.this, XacNhanDuyet.class);
                 intent.putExtra("selectedItem", selectedItem);
                 startActivity(intent);
-
             });
 
     }

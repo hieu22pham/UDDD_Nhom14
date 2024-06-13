@@ -1,5 +1,6 @@
 package com.example.uddd_nhom14.activity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Button;
@@ -113,6 +114,10 @@ public class XacNhanDuyet extends AppCompatActivity {
             if (isUpdated) {
                 Toast.makeText(XacNhanDuyet.this, "Đã chấp nhận phiếu thành công", Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK);
+                Intent intent = new Intent(XacNhanDuyet.this, DuyetPhieu.class);
+
+                startActivity(intent);
+
                 finish();
             } else {
                 Toast.makeText(XacNhanDuyet.this, "Cập nhật trạng thái thất bại", Toast.LENGTH_SHORT).show();
@@ -124,6 +129,9 @@ public class XacNhanDuyet extends AppCompatActivity {
             if (isUpdated) {
                 Toast.makeText(XacNhanDuyet.this, "Đã từ chôi phiếu thành công", Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK);
+                Intent intent = new Intent(XacNhanDuyet.this, DuyetPhieu.class);
+
+                startActivity(intent);
                 finish();
             } else {
                 Toast.makeText(XacNhanDuyet.this, "Cập nhật trạng thái thất bại", Toast.LENGTH_SHORT).show();
