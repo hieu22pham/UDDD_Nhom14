@@ -124,6 +124,7 @@ public class Login extends AppCompatActivity {
         db.addAccountToDatabase(new Account("b", "b",  1));
         db.addAccountToDatabase(new Account("admin", "123456", 1));
         db.addAccountToDatabase(new Account("e", "e", 0));
+        db.addAccountToDatabase(new Account("f", "f", 0));
 
         db.close();
     }
@@ -148,6 +149,7 @@ public class Login extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         db.addARentToDatabase(new Rent("a", 501+"", "A", "1", year+""));
+        db.addARentToDatabase(new Rent("f", 501+"", "A", "1", year+""));
         db.close();
     }
 
