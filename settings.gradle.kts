@@ -19,6 +19,7 @@ dependencyResolutionManagement {
     }
 }
 
+
 rootProject.name = "UDDD_Nhom14"
 include(":app")
  
