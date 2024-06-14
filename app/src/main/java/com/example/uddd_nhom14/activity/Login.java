@@ -35,7 +35,11 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        dbHelper.onUpgrade(db, 2, 3);
+        dbHelper.close();
+        db.close();
         initAccountsDatabase();
         initRoomsDatabase();
         addSomeFakeRent();
