@@ -6,9 +6,11 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -25,26 +27,29 @@ import com.example.uddd_nhom14.entity.Room;
 import java.util.Calendar;
 
 public class Login extends AppCompatActivity {
-
+    TextView forgotPasswordTextView;
     EditText edtUsername, edtPassword;
     Button btnDangNhap;
     CheckBox ckbLuuThongTin;
     private int role, id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        dbHelper.onUpgrade(db, 2, 3);
-        dbHelper.close();
-        db.close();
-        initAccountsDatabase();
-        initRoomsDatabase();
-        addSomeFakeRent();
-        addSession();
-        addSomeProfiles();
+//
+//        DatabaseHelper dbHelper = new DatabaseHelper(this);
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//        dbHelper.onUpgrade(db, 2, 3);
+//        dbHelper.close();
+//        db.close();
+//        initAccountsDatabase();
+//        initRoomsDatabase();
+//        addSomeFakeRent();
+//        addSession();
+//        addSomeProfiles();
+
         getWidget();
     }
     @Override
@@ -71,11 +76,13 @@ public class Login extends AppCompatActivity {
         editor.putBoolean("save", ckbLuuThongTin.isChecked());
         editor.apply();
     }
+    @SuppressLint("WrongViewCast")
     public void getWidget(){
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
         btnDangNhap = findViewById(R.id.btnDangNhap);
         ckbLuuThongTin = findViewById(R.id.ckbLuuThongTin);
+        forgotPasswordTextView = findViewById(R.id.forgotPasswordTextView);
         btnDangNhap.setOnClickListener(v -> {
             saveLoginState();
             String username = edtUsername.getText()+"";
@@ -103,6 +110,13 @@ public class Login extends AppCompatActivity {
                 b.create();
                 b.show();
                 
+            }
+        });
+        forgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this, QuenMatKhau.class);
+                startActivity(intent);
             }
         });
     }
@@ -137,6 +151,8 @@ public class Login extends AppCompatActivity {
         db.addAccountToDatabase(new Account("b", "b",  1));
         db.addAccountToDatabase(new Account("admin", "123456", 1));
         db.addAccountToDatabase(new Account("e", "e", 0));
+        db.addAccountToDatabase(new Account("khanh", "12345", 0));
+        db.addAccountToDatabase(new Account("khai", "12345", 1));
         db.addAccountToDatabase(new Account("2021604440", "f", 0));
 
         db.close();
@@ -181,6 +197,8 @@ public class Login extends AppCompatActivity {
         DatabaseHelper db = new DatabaseHelper(this);
         db.addAProfile(new Profile("a", "0838388833", "uwa@gmail.com", "Tạ Thị Lạng"));
         db.addAProfile(new Profile("2021604440", "0838388833", "uwa@gmail.com", "Trần Trí Trung"));
+        db.addAProfile(new Profile("khanh", "0393511358", "uwa@gmail.com", "Đặng Văn Khanh"));
+        db.addAProfile(new Profile("khai", "0385946895", "uwa@gmail.com", "Đặng Văn Khải"));
         db.close();
     }
 

@@ -422,5 +422,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int result = db.update(REQUEST_TABLE_NAME, contentValues, COLUMN_REQUESTID + " = ?", new String[]{String.valueOf(requestId)});
         return result > 0;
     }
+    // Khanh code databasse o day
+    public int updatePasswordAccount(Account c, int id) {
+        SQLiteDatabase db = getWritableDatabase();
+        String updateQuery = "UPDATE " + ACCOUNT_TABLE_NAME + " SET " + COLUMN_PASSWORD + " = '" + c.getPassword() + "' WHERE " + COLUMN_ID + " = " + id;
+        db.execSQL(updateQuery);
+        db.close();
+        return 1;
+    }
+    public Cursor getAccountInfoById(int id) {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.query(ACCOUNT_TABLE_NAME, null, COLUMN_ID + " = ?", new String[]{String.valueOf(id)}, null, null, null);
+    }
+
+
+
+    //.......
 }
 
