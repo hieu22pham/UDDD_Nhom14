@@ -1,10 +1,12 @@
 package com.example.uddd_nhom14.database;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.ContactsContract;
 
 import com.example.uddd_nhom14.entity.Account;
 import com.example.uddd_nhom14.entity.Profile;
@@ -400,6 +402,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(ROOM_TABLE_NAME, null, cv);
     }
 
+    @SuppressLint("Range")
+    public String getNameByUsername(String username) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(PROFILE_TABLE_NAME, null, COLUMN_USERNAME + " = ?", new String[]{username}, null, null, null);
+        String res = "";
+        if (cursor.moveToFirst()) res = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME));
+        cursor.close();
+        return res;
+    }
     public boolean updateRequestStatus(int requestId, int newStatus) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();

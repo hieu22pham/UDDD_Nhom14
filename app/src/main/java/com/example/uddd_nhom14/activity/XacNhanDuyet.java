@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.uddd_nhom14.R;
 import com.example.uddd_nhom14.database.DatabaseHelper;
 
+import java.util.Calendar;
+
 public class XacNhanDuyet extends AppCompatActivity {
     DatabaseHelper dbHelper = new DatabaseHelper(this);
 
@@ -52,6 +54,7 @@ public class XacNhanDuyet extends AppCompatActivity {
         }
         String ki="";
         String nam="";
+        Calendar calendar = Calendar.getInstance();
         cursor = dbHelper.getRentByUsername(requestUsername);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
@@ -60,6 +63,7 @@ public class XacNhanDuyet extends AppCompatActivity {
             }
 
         }
+        nam = calendar.get(Calendar.YEAR) + "";
 
 
         TextView textViewRequestId = findViewById(R.id.textView);

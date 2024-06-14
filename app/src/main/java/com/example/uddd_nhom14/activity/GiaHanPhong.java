@@ -2,6 +2,7 @@
 package com.example.uddd_nhom14.activity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -150,8 +152,31 @@ public class GiaHanPhong extends AppCompatActivity {
                     Toast.makeText(this, "Yêu cầu đã được gửi đi", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    db.addAGiaHanRequest(new Request(username, roomnumber, roomarea, kyhoc, namhoc, 1, 0));
-                    Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder b = new AlertDialog.Builder(this);
+                    b.setTitle("Xác nhận");
+                    b.setMessage("Bạn có chắc muốn gửi yêu cầu gia hạn?");
+                    b.setPositiveButton("Gửi", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            db.addAGiaHanRequest(new Request(username, roomnumber, roomarea, kyhoc, namhoc, 1, 0));
+                            AlertDialog.Builder c = new AlertDialog.Builder(GiaHanPhong.this);
+                            c.setMessage("Yêu cầu gia hạn đã được gửi đi!");
+                            c.setTitle("Thành công.");
+                            c.setNegativeButton("Đóng", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            });
+                            c.create();
+                            c.show();
+                            Toast.makeText(GiaHanPhong.this, "Đã gửi yêu cầu gia hạn.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    b.setNegativeButton("Hủy", null);
+                    b.setIcon(android.R.drawable.ic_dialog_alert);
+                    b.create();
+                    b.show();
                 }
             }
 

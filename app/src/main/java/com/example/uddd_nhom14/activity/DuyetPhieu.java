@@ -73,6 +73,7 @@ public class DuyetPhieu extends AppCompatActivity {
             while (cursor.moveToNext()) {
                 dem++;
                 String requestusername = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_USERNAME));
+                String requestname = databaseHelper.getNameByUsername(requestusername);
                 String requestId = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_REQUESTID));
                 String requestType = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_REQUESTTYPE));
                 String requestStatus = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_REQUESTSTATUS));
@@ -99,7 +100,7 @@ public class DuyetPhieu extends AppCompatActivity {
                 String rentInfo = "                    ID Phiếu: "+requestId+
                         "\n                    Loại phiếu: " +rtype +
                         "\n"+dem+ "                 Trạng Thái : "+status +
-                        "\n                    Người tạo : "+requestusername+
+                        "\n                    Người tạo : "+requestname+
                         "\n                    phòng : "+loai+
                         "\n                    khu : "+khu;
                 rentList.add(rentInfo);
