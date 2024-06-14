@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.uddd_nhom14.R;
@@ -89,7 +90,13 @@ public class Login extends AppCompatActivity {
                 }
             }
             else {
-                Toast.makeText(Login.this, "Ủa alo xem lại tài khoản", Toast.LENGTH_LONG).show();
+                AlertDialog.Builder b = new AlertDialog.Builder(this);
+                b.setTitle("Lỗi");
+                b.setMessage("Thông tin đăng nhập không hợp lệ!");
+                b.setNegativeButton("Cancel", null);
+                b.create();
+                b.show();
+                
             }
         });
     }
@@ -124,7 +131,7 @@ public class Login extends AppCompatActivity {
         db.addAccountToDatabase(new Account("b", "b",  1));
         db.addAccountToDatabase(new Account("admin", "123456", 1));
         db.addAccountToDatabase(new Account("e", "e", 0));
-        db.addAccountToDatabase(new Account("f", "f", 0));
+        db.addAccountToDatabase(new Account("2021604440", "f", 0));
 
         db.close();
     }
@@ -149,7 +156,7 @@ public class Login extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         db.addARentToDatabase(new Rent("a", 501+"", "A", "1", year+""));
-        db.addARentToDatabase(new Rent("f", 501+"", "A", "1", year+""));
+        db.addARentToDatabase(new Rent("2021604440", 501+"", "A", "2", year+""));
         db.close();
     }
 
@@ -167,6 +174,7 @@ public class Login extends AppCompatActivity {
     public void addSomeProfiles() {
         DatabaseHelper db = new DatabaseHelper(this);
         db.addAProfile(new Profile("a", "0838388833", "uwa@gmail.com", "Tạ Thị Lạng"));
+        db.addAProfile(new Profile("2021604440", "0838388833", "uwa@gmail.com", "Trần Trí Trung"));
         db.close();
     }
 
