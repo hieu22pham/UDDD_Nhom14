@@ -96,19 +96,20 @@ public class otpForm extends AppCompatActivity {
     }
 
 
-//    @SuppressLint("MissingSuperCall")
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        if(requestCode == 100){
-//            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-//                sendOTP();
-//
-//            }else {
-//                Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == 100){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                sendOTP();
+
+            }else {
+                Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
     private void sendOTP() {
+
 
         SmsManager smsManager = SmsManager.getDefault();
         ArrayList<String> parts = smsManager.divideMessage(maOtp + " " + " là mã otp của ban.");

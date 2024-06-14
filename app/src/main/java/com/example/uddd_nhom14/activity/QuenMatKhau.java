@@ -42,10 +42,10 @@ public class QuenMatKhau extends AppCompatActivity {
 //        String dbName = "mydatabase.db";
 //
 
-
-        //SQLiteDatabase db = dbHelper.getWritableDatabase();
-        //dbHelper.onUpgrade(db, 1, 2);
-
+//        DatabaseHelper dbHelper = new DatabaseHelper(this);
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//        dbHelper.onUpgrade(db, 2, 3);
+        //initDatabase();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -65,7 +65,7 @@ public class QuenMatKhau extends AppCompatActivity {
                     Account acc = getAccById(idAcc);
                     String phoneNumber = getPhoneNumberByUserName(username);
                     if (phoneNumber.length() > 0) {
-                        Log.d("Thông tin acc", acc.getName() + acc.getUsername());
+                        Log.d("Thông tin acc",  acc.getUsername());
 
                         // Activity đầu tiên
                         Intent intent = new Intent(QuenMatKhau.this, otpForm.class);
@@ -128,8 +128,9 @@ public class QuenMatKhau extends AppCompatActivity {
                 // Kiểm tra xem Cursor có chứa bất kỳ hàng nào không
                 if (cursor.moveToFirst())
                 {
+
                     Account acc = new Account(cursor.getString(1), cursor.getString(2),
-                            cursor.getString(3), cursor.getInt(4));
+                             cursor.getInt(3));
                     return acc;
                 } else
                 {
@@ -185,10 +186,10 @@ public class QuenMatKhau extends AppCompatActivity {
     public void initDatabase() {
         DatabaseHelper db = new DatabaseHelper(this);
         //acc
-        db.addAccountToDatabase(new Account( "khanh", "12345", "Đặng Khánh", 1));
-        db.addAccountToDatabase(new Account( "khai", "12345", "Đặng Khải", 1));
-        db.addAccountToDatabase(new Account( "bao", "12345", "Đặng Bảo", 1));
-        db.addAccountToDatabase(new Account( "dung", "12345", "Đặng Dung", 1));
+        db.addAccountToDatabase(new Account( "khanh", "12345",  1));
+        db.addAccountToDatabase(new Account( "khai", "12345",  1));
+        db.addAccountToDatabase(new Account( "bao", "12345", 1));
+        db.addAccountToDatabase(new Account( "dung", "12345",  1));
         //profile
         db.addAProfile(new Profile("khanh", "0393511358", "bangbang2k3kul@gmail.com", "khanh"));
         db.addAProfile(new Profile("khai", "0385946895", "abc@gmail.com", "khai"));

@@ -21,8 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_USERNAME = "username";
     public static final String COLUMN_PASSWORD = "password";
-    public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_ROLE = "role";
+    public static final String COLUMN_ROLE = "role"; // 0 sv 1 admin
 
     //Thông số bảng rooms
     public static final String ROOM_TABLE_NAME = "rooms";
@@ -43,6 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //
     public static final String PROFILE_TABLE_NAME = "profile";
     public static final String COLUMN_PROFILEID = "profileid";
+    public static final String COLUMN_NAME = "name";
     public static final String COLUMN_SDT = "sdt";
     public static final String COLUMN_EMAIL = "email";
 
@@ -67,7 +67,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_USERNAME + " TEXT, "
                 + COLUMN_PASSWORD + " TEXT, "
-                + COLUMN_NAME + " TEXT, "
                 + COLUMN_ROLE + " INTEGER)";
         db.execSQL(createTableQuery);
         //Tạo bảng rooms
@@ -92,19 +91,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "CONSTRAINT fk2 FOREIGN KEY(" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA + ") "
                 + " REFERENCES " + ROOM_TABLE_NAME + " (" + COLUMN_ROOMNUMBER + ", " + COLUMN_AREA  + ")  )";
         db.execSQL(createTableQuery3);
-
-        // profile
-
+        //
         String createTableQuery5 = "CREATE TABLE " + PROFILE_TABLE_NAME + "("
                 + COLUMN_PROFILEID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_USERNAME + " TEXT, "
+                + COLUMN_NAME + " TEXT, "
                 + COLUMN_SDT + " TEXT, "
                 + COLUMN_EMAIL + " TEXT, "
                 + "CONSTRAINT fk4 FOREIGN KEY(" + COLUMN_USERNAME + ") "
                 + " REFERENCES " + ACCOUNT_TABLE_NAME + " (" + COLUMN_USERNAME + ")  )";
         db.execSQL(createTableQuery5);
-
-        //request
+        //
         String createTableQuery6 = "CREATE TABLE " + REQUEST_TABLE_NAME + "("
                 + COLUMN_REQUESTID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_REQUESTTYPE + " INTEGER, "
@@ -119,6 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "CONSTRAINT fk6 FOREIGN KEY(" + COLUMN_USERNAME + ") "
                 + " REFERENCES " + ACCOUNT_TABLE_NAME + " (" + COLUMN_USERNAME + ")  )";
         db.execSQL(createTableQuery6);
+
 
 
     }
@@ -195,7 +193,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_USERNAME, a.getUsername());
         cv.put(COLUMN_PASSWORD, a.getPassword());
-        if (a.getRole() == 0) cv.put(COLUMN_NAME, a.getName());
         cv.put(COLUMN_ROLE, a.getRole());
         db.insert(ACCOUNT_TABLE_NAME, null, cv);
         db.update(ACCOUNT_TABLE_NAME, cv, COLUMN_USERNAME + " = ?", new String[] {a.getUsername()});
