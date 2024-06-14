@@ -15,7 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.uddd_nhom14.R;
 
 public class MainActivity extends AppCompatActivity {
-    Button qmk, qlp, pdk;
+    Button qmk, qlp, pdk, log;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         qmk = findViewById(R.id.btnTranQMK);
         qlp = findViewById(R.id.btnTranQLP);
         pdk = findViewById(R.id.btnpdk);
+        log = findViewById(R.id.btnLog);
         qmk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, XacNhanDuyet.class);
+                startActivity(intent);
+            }
+        });
+        log.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Login.class);
                 startActivity(intent);
             }
         });
