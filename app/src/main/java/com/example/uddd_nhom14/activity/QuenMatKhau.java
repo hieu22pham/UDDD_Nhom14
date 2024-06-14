@@ -42,9 +42,9 @@ public class QuenMatKhau extends AppCompatActivity {
 //        String dbName = "mydatabase.db";
 //
 
-
-        //SQLiteDatabase db = dbHelper.getWritableDatabase();
-        //dbHelper.onUpgrade(db, 1, 2);
+//        DatabaseHelper dbHelper = new DatabaseHelper(this);
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//        dbHelper.onUpgrade(db, 1, 2);
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
