@@ -1,0 +1,5 @@
+/activity_login.xml
+/activity_main.xml
+/activity_phieu_dang_ky.xml
+/activity_quan_ly_phieu.xml
+/layout_item_quan_ly_phieu.xml
