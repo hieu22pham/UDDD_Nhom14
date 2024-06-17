@@ -102,7 +102,8 @@ public class DuyetPhieu extends AppCompatActivity {
                         "\n"+dem+ "                 Trạng Thái : "+status +
                         "\n                    Người tạo : "+requestname+
                         "\n                    phòng : "+loai+
-                        "\n                    khu : "+khu;
+                        "\n                    khu : "+khu+
+                        "\n                    usr: "+requestusername;
                 rentList.add(rentInfo);
             }
             cursor.close();

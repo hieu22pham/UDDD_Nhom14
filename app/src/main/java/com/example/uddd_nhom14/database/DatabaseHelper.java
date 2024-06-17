@@ -274,6 +274,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put("namhoc", namhoc);
         db.insert("kh", null, cv);
     }
+    public void updateRenewForRentlist(Rent r) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_USERNAME, r.getUsername());
+        cv.put(COLUMN_ROOMNUMBER, r.getRoomnumber());
+        cv.put(COLUMN_AREA, r.getRoomarea());
+        cv.put(COLUMN_KYHOC, r.getKyhoc());
+        cv.put(COLUMN_NAMHOC, r.getNamhoc());
+        db.update(RENTLIST_TABLE_NAME, cv, COLUMN_USERNAME + " = ?", new String[] {r.getUsername()});
+    }
+    public void deleteRequest(String username) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(REQUEST_TABLE_NAME, COLUMN_USERNAME + " = ?", new String[]{username});
+    }
     public void changeTerm (String kyhoc, String namhoc) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();

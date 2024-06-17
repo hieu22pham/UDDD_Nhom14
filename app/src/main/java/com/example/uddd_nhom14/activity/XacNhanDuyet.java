@@ -1,5 +1,6 @@
 package com.example.uddd_nhom14.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.uddd_nhom14.R;
 import com.example.uddd_nhom14.database.DatabaseHelper;
+import com.example.uddd_nhom14.entity.Rent;
 
 import java.util.Calendar;
 
@@ -18,6 +20,7 @@ public class XacNhanDuyet extends AppCompatActivity {
     DatabaseHelper dbHelper = new DatabaseHelper(this);
 
     private int requestId;
+    @SuppressLint("Range")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,7 @@ public class XacNhanDuyet extends AppCompatActivity {
         String requestUsername = parts[3].split(":")[1].trim();
         String roomNumber = parts[4].split(":")[1].trim();
         String roomarea = parts[5].split(":")[1].trim();
+        String username = parts[6].split(":")[1].trim();
 //        Cursor cursor = databaseHelper.getRoomByRoomNumberAndAreaCursor(roomNumber, roomarea);
 //        int price = cursor.getInt(5);
 //        int type = cursor.getInt(4);
@@ -43,6 +47,8 @@ public class XacNhanDuyet extends AppCompatActivity {
 
         String type="";
         String price="";
+        String ki="";
+        String nam="";
         Cursor cursor = dbHelper.getRoomByRoomNumberAndAreaCursor(roomNumber,roomarea);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
@@ -52,17 +58,18 @@ public class XacNhanDuyet extends AppCompatActivity {
 
 
         }
-        String ki="";
-        String nam="";
+
         Calendar calendar = Calendar.getInstance();
-        cursor = dbHelper.getRentByUsername(requestUsername);
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                ki= cursor.getString(4);
-                nam = cursor.getString(5);
+        Cursor cursor1 = dbHelper.getRenewRequestByUsername(username);
+        if (cursor1 != null) {
+            if (cursor1.moveToFirst()) {
+                ki= cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_KYHOC));
+                nam = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_NAMHOC));
             }
 
         }
+        String kyhoc = ki;
+        String namhoc = nam;
         nam = calendar.get(Calendar.YEAR) + "";
 
 
@@ -114,14 +121,18 @@ public class XacNhanDuyet extends AppCompatActivity {
 
         btnChapNhan.setOnClickListener(v -> {
 
+
+            dbHelper.updateRenewForRentlist(new Rent(username, roomNumber, roomarea, kyhoc, namhoc));
             boolean isUpdated = dbHelper.updateRequestStatus(Integer.parseInt(requestId), 1);
             if (isUpdated) {
                 Toast.makeText(XacNhanDuyet.this, "Đã chấp nhận phiếu thành công", Toast.LENGTH_SHORT).show();
+
                 setResult(RESULT_OK);
                 Intent intent = new Intent(XacNhanDuyet.this, DuyetPhieu.class);
 
                 startActivity(intent);
 
+                dbHelper.deleteRequest(username);
                 finish();
             } else {
                 Toast.makeText(XacNhanDuyet.this, "Cập nhật trạng thái thất bại", Toast.LENGTH_SHORT).show();
@@ -131,6 +142,7 @@ public class XacNhanDuyet extends AppCompatActivity {
         btnTuChoi.setOnClickListener(v -> {
             boolean isUpdated = dbHelper.updateRequestStatus(Integer.parseInt(requestId), -1);
             if (isUpdated) {
+                dbHelper.deleteRequest(username);
                 Toast.makeText(XacNhanDuyet.this, "Đã từ chôi phiếu thành công", Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK);
                 Intent intent = new Intent(XacNhanDuyet.this, DuyetPhieu.class);

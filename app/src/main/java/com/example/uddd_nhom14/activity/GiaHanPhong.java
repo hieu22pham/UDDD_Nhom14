@@ -104,8 +104,10 @@ public class GiaHanPhong extends AppCompatActivity {
                 int floor = cursor2.getInt(cursor2.getColumnIndex(DatabaseHelper.COLUMN_FLOOR));
                 tvTang.setText(String.valueOf(floor));
                 tvKhu.setText(roomarea);
-                kyhoc = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_KYHOC));
-                namhoc = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAMHOC));
+//                kyhoc = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_KYHOC));
+                kyhoc = db.getCurrentTerm();
+//                namhoc = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAMHOC));
+                namhoc = db.getCurrentYear();
                 String kh = kyhoc + " - " + namhoc;
                 tvKyHoc.setText(kh);
                 if (roomprice >= 700000) {
