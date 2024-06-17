@@ -60,6 +60,10 @@ public class MenuSinhVien extends AppCompatActivity {
             Intent intent2 = new Intent(MenuSinhVien.this, CapNhatTTSV.class);
             startActivity(intent2);
         });
+        btnDangKyPhong.setOnClickListener(v -> {
+            Intent intent3 = new Intent(MenuSinhVien.this, DangKyPhongf.class);
+            startActivity(intent3);
+        });
     }
 
 }

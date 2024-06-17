@@ -8,7 +8,7 @@
     <color name="pending_color">#FF0000</color>  <!-- Red -->
     <color name="even_row_color">#E0E0E0</color>
     <color name="odd_row_color">#CCFFFF</color>
-
+    <color name="blue">#34595F</color>
 
 
 </resources>
