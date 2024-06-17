@@ -196,12 +196,12 @@ public class QuenMatKhau extends AppCompatActivity {
 //        db.addRoomToDatabase(new Room("303", "A", 3+"", 800000, 4));
 
         //request
-//        db.addAGiaHanRequest(new Request("khanh", "501", "A", "1", "2024", 1, 0));
-//        db.addAGiaHanRequest(new Request("khai", "502", "A", "2", "2024", 2, 1));
-//        db.addAGiaHanRequest(new Request("bao", "301", "A", "1", "2024", 2, 0));
-//        db.addAGiaHanRequest(new Request("dung", "303", "A", "2", "2024", 1, 0));
-//        db.addAGiaHanRequest(new Request("khanh", "501", "A", "1", "2024", 2, -1));
-//        db.addAGiaHanRequest(new Request("khai", "301", "A", "2", "2024", 1, 0));
+//        db.addARenewRequest(new Request("khanh", "501", "A", "1", "2024", 1, 0));
+//        db.addARenewRequest(new Request("khai", "502", "A", "2", "2024", 2, 1));
+//        db.addARenewRequest(new Request("bao", "301", "A", "1", "2024", 2, 0));
+//        db.addARenewRequest(new Request("dung", "303", "A", "2", "2024", 1, 0));
+//        db.addARenewRequest(new Request("khanh", "501", "A", "1", "2024", 2, -1));
+//        db.addARenewRequest(new Request("khai", "301", "A", "2", "2024", 1, 0));
 
       //  db.close();
     }

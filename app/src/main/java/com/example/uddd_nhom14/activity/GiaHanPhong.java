@@ -146,7 +146,7 @@ public class GiaHanPhong extends AppCompatActivity {
             DatabaseHelper db = new DatabaseHelper(this);
             Cursor cursor = db.getSession();
             if (cursor.moveToFirst()) {
-                @SuppressLint("Range") Cursor cursorRequest = db.getGiaHanRequestByUsername(cursor.getString(cursor.getColumnIndex("username")));
+                @SuppressLint("Range") Cursor cursorRequest = db.getRenewRequestByUsername(cursor.getString(cursor.getColumnIndex("username")));
                 if (cursorRequest.getCount() > 0) {
 
                     Toast.makeText(this, "Yêu cầu đã được gửi đi", Toast.LENGTH_LONG).show();
@@ -158,7 +158,7 @@ public class GiaHanPhong extends AppCompatActivity {
                     b.setPositiveButton("Gửi", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            db.addAGiaHanRequest(new Request(username, roomnumber, roomarea, kyhoc, namhoc, 1, 0));
+                            db.addARenewRequest(new Request(username, roomnumber, roomarea, kyhoc, namhoc, 1, 0));
                             AlertDialog.Builder c = new AlertDialog.Builder(GiaHanPhong.this);
                             c.setMessage("Yêu cầu gia hạn đã được gửi đi!");
                             c.setTitle("Thành công.");

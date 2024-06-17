@@ -105,7 +105,7 @@ public class TaoPhieuDangKy extends AppCompatActivity {
             public void onClick(View v) {
                 // Tạo một đối tượng Request mới và thêm vào database
                 Request request = new Request(username, roomname, khu, ki, nam, 1, 0);
-                dbHelper.addADangKyRequest(request);
+                dbHelper.addARegisterRequest(request);
 
                 // Hiển thị thông báo hoặc thực hiện các hành động khác sau khi thêm request thành công
                 Toast.makeText(TaoPhieuDangKy.this, "Đã thêm phiếu đăng ký thành công", Toast.LENGTH_SHORT).show();

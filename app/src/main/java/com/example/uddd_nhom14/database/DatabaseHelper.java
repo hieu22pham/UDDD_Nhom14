@@ -166,7 +166,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         return db.query(PROFILE_TABLE_NAME, null, COLUMN_USERNAME + " = ?", new String[]{username}, null, null, null);
     }
-    public Cursor getGiaHanRequestByUsername(String username) {
+    public Cursor getRenewRequestByUsername(String username) {
         SQLiteDatabase db = getReadableDatabase();
         return db.query(REQUEST_TABLE_NAME, null, COLUMN_USERNAME + " = ?", new String[]{username}, null, null, null);
     }
@@ -242,7 +242,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(PROFILE_TABLE_NAME, null, cv);
         db.update(PROFILE_TABLE_NAME, cv, COLUMN_USERNAME + " = ?", new String[] {p.getUsername()});
     }
-    public void addAGiaHanRequest(Request r){
+    public void addARenewRequest(Request r){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_REQUESTTYPE, r.getRequesttype());
@@ -451,7 +451,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         return db.query(ACCOUNT_TABLE_NAME, null, COLUMN_ID + " = ?", new String[]{String.valueOf(id)}, null, null, null);
     }
-<<<<<<< HEAD
+
 
     public int countPeopleByRoomNumberAndArea(String roomNumber, String area) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -461,7 +461,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int count = cursor.getCount();
         cursor.close();
         return count;
-=======
+    }
+
     @SuppressLint("Range")
     public String getCurrentTerm() {
         SQLiteDatabase db = getReadableDatabase();
@@ -481,11 +482,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return year;
->>>>>>> 76ceb227ffe502550d6b20cd8ad57cee887c13b5
+
     }
 
     // Các khai báo và phương thức khác của lớp DatabaseHelper
-    public void addADangKyRequest(Request request) {
+    public void addARegisterRequest(Request request) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_USERNAME, request.getUsername());
