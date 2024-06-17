@@ -24,7 +24,10 @@ import com.example.uddd_nhom14.entity.Profile;
 import com.example.uddd_nhom14.entity.Rent;
 import com.example.uddd_nhom14.entity.Room;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 public class Login extends AppCompatActivity {
     TextView forgotPasswordTextView;
@@ -38,18 +41,13 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-//
-//        DatabaseHelper dbHelper = new DatabaseHelper(this);
-//        SQLiteDatabase db = dbHelper.getWritableDatabase();
-//        dbHelper.onUpgrade(db, 2, 3);
-//        dbHelper.close();
-//        db.close();
-//        initAccountsDatabase();
-//        initRoomsDatabase();
-//        addSomeFakeRent();
-//        addSession();
-//        addSomeProfiles();
-
+        initAccountsDatabase();
+        initRoomsDatabase();
+        addSomeFakeRent();
+        addSession();
+        addSomeProfiles();
+        addTerm();
+        changeTerm();
         getWidget();
     }
     @Override
@@ -191,6 +189,33 @@ public class Login extends AppCompatActivity {
     public void saveSession(String username) {
         DatabaseHelper db = new DatabaseHelper(this);
         db.changeSession(username);
+        db.close();
+    }
+    public void addTerm() {
+        DatabaseHelper db = new DatabaseHelper(this);
+        db.addTerm("1","2024");
+        db.close();
+    }
+    public void changeTerm () {
+        DatabaseHelper db = new DatabaseHelper(this);
+        Calendar calendar = Calendar.getInstance();
+        int y = calendar.get(Calendar.YEAR);
+        String y2 = y+"";
+        String s = y2+"-06-01";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            long d1 = dateFormat.parse(s).getTime();
+            long d2 = System.currentTimeMillis();
+            long d = d2-d1;
+            long dd = TimeUnit.DAYS.convert(d, TimeUnit.MILLISECONDS);
+            String ky = "", nam = y2;
+            if (dd <= 0) ky = "1";
+            else ky = "2";
+            db.changeTerm(ky, nam);
+//            Toast.makeText(this, dd+"", Toast.LENGTH_LONG).show();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         db.close();
     }
     public void addSomeProfiles() {

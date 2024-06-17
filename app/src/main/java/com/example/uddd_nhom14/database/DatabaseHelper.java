@@ -123,6 +123,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //
         String createTableQuery7 = "CREATE TABLE session ( sessionid INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT ) ";
         db.execSQL(createTableQuery7);
+        //
+        String createTableQuery8 = "CREATE TABLE kh ( khid INTEGER PRIMARY KEY AUTOINCREMENT, kyhoc TEXT, namhoc TEXT ) ";
+        db.execSQL(createTableQuery8);
     }
 
     @Override
@@ -263,6 +266,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_USERNAME, username);
         db.update("session", cv, null, null);
+    }
+    public void addTerm (String kyhoc, String namhoc) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("kyhoc", kyhoc);
+        cv.put("namhoc", namhoc);
+        db.insert("kh", null, cv);
+    }
+    public void changeTerm (String kyhoc, String namhoc) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("kyhoc", kyhoc);
+        cv.put("namhoc", namhoc);
+        db.update("kh", cv, null, null);
     }
     public void deleteRoomFromDatabase (String roomnumber, String area){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -434,6 +451,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         return db.query(ACCOUNT_TABLE_NAME, null, COLUMN_ID + " = ?", new String[]{String.valueOf(id)}, null, null, null);
     }
+<<<<<<< HEAD
 
     public int countPeopleByRoomNumberAndArea(String roomNumber, String area) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -443,6 +461,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int count = cursor.getCount();
         cursor.close();
         return count;
+=======
+    @SuppressLint("Range")
+    public String getCurrentTerm() {
+        SQLiteDatabase db = getReadableDatabase();
+        String term = "";
+        Cursor cursor = db.query("kh", null, null, null, null, null, null);
+        if (cursor.moveToFirst()) term = cursor.getString(cursor.getColumnIndex("kyhoc"));
+        cursor.close();
+        db.close();
+        return term;
+    }
+    @SuppressLint("Range")
+    public String getCurrentYear() {
+        SQLiteDatabase db = getReadableDatabase();
+        String year = "";
+        Cursor cursor = db.query("kh", null, null, null, null, null, null);
+        if (cursor.moveToFirst()) year = cursor.getString(cursor.getColumnIndex("namhoc"));
+        cursor.close();
+        db.close();
+        return year;
+>>>>>>> 76ceb227ffe502550d6b20cd8ad57cee887c13b5
     }
 
     // Các khai báo và phương thức khác của lớp DatabaseHelper

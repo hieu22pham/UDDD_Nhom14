@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -16,6 +17,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.uddd_nhom14.R;
 import com.example.uddd_nhom14.database.DatabaseHelper;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 public class MenuSinhVien extends AppCompatActivity {
 
@@ -45,10 +51,24 @@ public class MenuSinhVien extends AppCompatActivity {
             assert bundle != null;
             Cursor cursor = db.query(DatabaseHelper.RENTLIST_TABLE_NAME, null, DatabaseHelper.COLUMN_USERNAME + " = ?", new String[] {bundle.getString("username")}, null, null, null);
             if (cursor.moveToFirst()) {
-                Intent intent1 = new Intent(MenuSinhVien.this, GiaHanPhong.class);
-                intent1.putExtra("bundle", bundle);
-                startActivity(intent1);
+                int kythue = Integer.parseInt(cursor.getString(cursor.getColumnIndex("kyhoc")));
+                int namthue = Integer.parseInt(cursor.getString(cursor.getColumnIndex("namhoc")));
+                int kyhientai = Integer.parseInt(dbHelper.getCurrentTerm());
+                int namhientai = Integer.parseInt(dbHelper.getCurrentYear());
+                if (kythue < kyhientai || namthue < namhientai) {
+                    Intent intent1 = new Intent(MenuSinhVien.this, GiaHanPhong.class);
+                    intent1.putExtra("bundle", bundle);
+                    startActivity(intent1);
 //                Toast.makeText(MenuSinhVien.this, cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ROOMNUMBER)), Toast.LENGTH_LONG).show();
+                }
+                else {
+                    AlertDialog.Builder b = new AlertDialog.Builder(this);
+                    b.setMessage("Chưa đến thời điểm gia hạn!");
+                    b.setNegativeButton("Đóng", null);
+                    b.create();
+                    b.show();
+                }
+
             }
             else {
                 Toast.makeText(MenuSinhVien.this, "Chưa có", Toast.LENGTH_LONG).show();
